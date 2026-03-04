@@ -4,13 +4,13 @@ import {
   INSTAGRAM_URL,
   PHONE_DISPLAY,
   LOCATION,
-} from "../../lib/constants"
+} from "@/lib/constants"
 
 export function ContactSection() {
   return (
-    <section className="py-16 px-4 bg-gradient-to-b from-secondary/30 to-background">
+    <section className="py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl font-black mb-8 text-foreground text-balance">
+        <h2 className="text-4xl md:text-5xl font-black mb-8 text-gray-900 text-balance">
           Get In Touch
         </h2>
 
@@ -29,14 +29,14 @@ export function ContactSection() {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gradient-to-r from-[#E1306C] to-[#C13584] hover:from-[#C13584] hover:to-[#833AB4] text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
+            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
           >
             <Instagram size={20} />
             Follow Us
           </a>
         </div>
 
-        <div className="space-y-3 text-muted-foreground">
+        <div className="flex flex-col gap-3 text-gray-700">
           <p className="flex items-center justify-center gap-2 text-lg">
             <Phone size={20} className="text-[#FF4500]" />
             {PHONE_DISPLAY}
