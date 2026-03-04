@@ -19,7 +19,7 @@ yarn-error.log*
 # Build output
 # =========================
 dist/
-data/
+
 build/
 .out/
 .next/
