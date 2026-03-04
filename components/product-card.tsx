@@ -3,7 +3,14 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Plus, Minus } from "lucide-react"
-import type { Product } from "../lib/data/products"
+import { products } from "../lib/data/products"
+
+export type Product = {
+  image: string
+  name: string
+  description: string
+  price: number
+}
 
 interface ProductCardProps {
   product: Product

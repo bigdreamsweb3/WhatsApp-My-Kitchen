@@ -1,4 +1,6 @@
-import type { Product } from "../data/products";
+import type { products } from "../data/products";
+
+type Product = typeof products[number];
 import {
   BRAND_NAME,
   WHATSAPP_BASE_URL,
@@ -6,9 +8,13 @@ import {
   PAYMENT_ACCOUNT,
 } from "../constants";
 
-export interface CartItem extends Product {
+export type CartItem = {
+  id: number;
   quantity: number;
-}
+  price: number;
+  name: string;
+  // ...other properties from Product...
+};
 
 export interface CheckoutForm {
   address: string;
@@ -22,7 +28,9 @@ export function generateWhatsAppMessage(
   form: CheckoutForm,
 ): string {
   const ref = `ord_${Date.now()}`;
-  const payLink = `${SITE_URL}/pay?amount=${encodeURIComponent(total.toString())}&ref=${encodeURIComponent(ref)}`;
+  const payLink = `${SITE_URL}/pay?amount=${encodeURIComponent(
+    total.toString(),
+  )}&ref=${encodeURIComponent(ref)}`;
 
   let message = `Hello ${BRAND_NAME}!:\n\n`;
   message += "\u{1F6D2} *Order Summary:*\n";
@@ -54,7 +62,9 @@ export function generateWhatsAppMessage(
 
 export function generateBuyNowMessage(product: Product): string {
   const ref = `ord_${Date.now()}`;
-  const payLink = `${SITE_URL}/pay?amount=${encodeURIComponent(product.price.toString())}&ref=${encodeURIComponent(ref)}`;
+  const payLink = `${SITE_URL}/pay?amount=${encodeURIComponent(
+    product.price.toString(),
+  )}&ref=${encodeURIComponent(ref)}`;
   let message = `Hello ${BRAND_NAME}!:\n\n *Order:*\n- ${product.name} x1 \u2013 \u20A6${product.price.toLocaleString()}\n\n*Total: \u20A6${product.price.toLocaleString()}*\n\n`;
   message += `Payment: ${PAYMENT_ACCOUNT.bankName} ${PAYMENT_ACCOUNT.accountNumber} (${PAYMENT_ACCOUNT.accountName})\n`;
   message += `Complete payment here: ${payLink}`;
