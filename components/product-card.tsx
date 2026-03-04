@@ -3,7 +3,6 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Plus, Minus } from "lucide-react"
-import { products } from "../lib/data/products"
 
 export type Product = {
   image: string

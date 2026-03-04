@@ -1,5 +1,6 @@
+import { testimonials } from "@/lib/data/testimonials"
 import { Star } from "lucide-react"
-import { testimonials } from "../../lib/data/testimonials"
+
 
 export function TestimonialsSection() {
   return (

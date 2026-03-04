@@ -1,9 +1,10 @@
 "use client"
 
 import Image from "next/image"
-import { products } from "../../lib/data/products"
+
 import { ProductCard } from "../../components/product-card"
 import type { Product } from "../../components/product-card"
+import { products } from "@/lib/data/products"
 
 const BG_IMAGES = [
   "/menu/bg-1.jpg",
