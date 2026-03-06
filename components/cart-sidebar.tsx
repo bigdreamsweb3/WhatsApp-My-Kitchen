@@ -173,7 +173,7 @@ function CartItemRow({ item, onUpdateQuantity, onRemoveItem }: CartItemRowProps)
   return (
     <div className="flex gap-4 bg-gray-50 p-4 rounded-lg">
       <Image
-        src={item.image}
+        src={item.imageUrl}
         alt={item.name}
         width={80}
         height={80}

@@ -1,6 +1,5 @@
-import type { products } from "../data/products";
+import type { Product, productCategories } from "../data/products";
 
-type Product = typeof products[number];
 import {
   BRAND_NAME,
   WHATSAPP_BASE_URL,
@@ -10,10 +9,10 @@ import {
 
 export type CartItem = {
   id: number;
-  quantity: number;
-  price: number;
   name: string;
-  // ...other properties from Product...
+  price: number;
+  quantity: number;
+  imageUrl: string; // Add this property to match Product interface
 };
 
 export interface CheckoutForm {

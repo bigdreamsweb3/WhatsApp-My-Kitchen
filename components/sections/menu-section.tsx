@@ -4,7 +4,10 @@ import Image from "next/image"
 
 import { ProductCard } from "../../components/product-card"
 import type { Product } from "../../components/product-card"
-import { products } from "@/lib/data/products"
+import { ProductMenu } from "../product-menu"
+
+// import { products } from "@/lib/data/products"
+
 
 const BG_IMAGES = [
   "/menu/bg-1.jpg",
@@ -27,7 +30,7 @@ interface MenuSectionProps {
   onBuyNow: (product: Product) => void
 }
 
-export function MenuSection({ onAddToCart, onBuyNow }: MenuSectionProps) {
+export function MenuSection(props: MenuSectionProps) {
   return (
     <section id="menu" className="relative overflow-hidden">
       {/* Scrolling image columns as background */}
@@ -74,7 +77,7 @@ export function MenuSection({ onAddToCart, onBuyNow }: MenuSectionProps) {
       {/* Foreground content */}
       <div className="relative z-10 pb-16">
         {/* Header block with solid backdrop for maximum focus */}
-        <div className="flex flex-col items-center mb-14 -translate-y-[5%]" style={{
+        <div className="flex flex-col items-center -translate-y-[5%]" style={{
           maskImage:
             "linear-gradient(to left, black 0%, black 90%, transparent 100%), linear-gradient(to right, black 0%, black 90%, transparent 100%),linear-gradient(to top, black 0%, black 10%, transparent 100%), linear-gradient(to bottom, black 0%, black 10%, transparent 100%),",
           WebkitMaskImage:
@@ -109,18 +112,7 @@ export function MenuSection({ onAddToCart, onBuyNow }: MenuSectionProps) {
 
         </div>
 
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onAddToCart={onAddToCart}
-                onBuyNow={onBuyNow}
-              />
-            ))}
-          </div>
-        </div>
+        <ProductMenu onAddToCart={props.onAddToCart} onBuyNow={props.onBuyNow} />
       </div>
     </section>
   )
