@@ -28,18 +28,17 @@ export function ProductMenu({ onAddToCart, onBuyNow }: MenuSectionProps) {
   };
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="bg-background min-h-screen max-w-6xl mx-auto -translate-y-2">
       {/* Sticky Category Navigation */}
       <nav
         aria-label="Product categories"
         className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-sm"
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex overflow-x-auto gap-1.5 py-3 -mx-4 sm:mx-0 px-4 sm:px-0 scrollbar-hide">
             {productCategories.map((category) => (
-              <div className="flex items-center">
+              <div key={category.id} className="flex items-center">
                 <button
-                  key={category.id}
                   onClick={() => scrollToCategory(category.id)}
                   aria-current={activeCategory === category.id ? "page" : undefined}
                   className={`px-2 py-1 rounded-full whitespace-nowrap text-sm font-medium flex-shrink-0 transition-all ${activeCategory === category.id
@@ -47,8 +46,7 @@ export function ProductMenu({ onAddToCart, onBuyNow }: MenuSectionProps) {
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                     }`}
                 >
-                  <span >{category.name}</span>
-
+                  <span>{category.name}</span>
                 </button>
 
                 <span className=" -translate-x-3" style={{
