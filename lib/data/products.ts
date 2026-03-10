@@ -15,6 +15,7 @@ export interface Category {
   emoji: string;
   description: string;
   products: Product[];
+  imageUrl: string;
 }
 
 export interface SuggestionGroup {
@@ -30,6 +31,7 @@ export const productCategories: Category[] = [
     emoji: "🍗",
     description:
       "Our classic chicken wings are naked, fried and hand tossed in any of our 10 house flavours",
+    imageUrl: "/menu/Category-Wings-3.jpg",
     products: [
       {
         id: "wings-8",
@@ -70,6 +72,7 @@ export const productCategories: Category[] = [
     emoji: "🦴",
     description:
       "100% all-white chicken breast meat, hand tossed in any of our 10 house flavours",
+    imageUrl: "/menu/Category-Wings-3.jpg",
     products: [
       {
         id: "boneless-8",
@@ -141,6 +144,7 @@ export const productCategories: Category[] = [
     name: "Drinks",
     emoji: "🥤",
     description: "Refresh yourself with our selection of cold beverages",
+    imageUrl: "/menu/Category-Wings-3.jpg",
     products: [
       {
         id: "drink-coke-regular",
@@ -181,6 +185,7 @@ export const productCategories: Category[] = [
     name: "Dips",
     emoji: "🍯",
     description: "Add flavor with our signature sauces and dipping options",
+    imageUrl: "/menu/Category-Wings-3.jpg",
     products: [
       {
         id: "sauce-hot",
@@ -225,6 +230,7 @@ export const productCategories: Category[] = [
     name: "Add-ons",
     emoji: "🍟",
     description: "Complete your meal with tasty sides and extras",
+    imageUrl: "/menu/Category-Wings-3.jpg",
     products: [
       {
         id: "addon-fries-regular",

@@ -33,7 +33,7 @@
   --muted: oklch(96% 0.012 80);
   --muted-foreground: oklch(55% 0.03 60);
 
-  --accent: oklch(45% 0.14 140); /* ≈ #0F7948 – green for success/ratings */
+  --accent: oklch(50.856% 0.11826 156.175);
   --accent-foreground: oklch(98% 0.01 80);
 
   --destructive: oklch(62% 0.23 25); /* ≈ #DC3D27 – red for delete/warnings */
@@ -81,7 +81,7 @@
   --muted: oklch(28% 0.04 70);
   --muted-foreground: oklch(70% 0.03 80);
 
-  --accent: oklch(58% 0.13 140); /* richer green */
+  --accent: oklch(50.856% 0.11826 156.175);
   --accent-foreground: oklch(18% 0.03 60);
 
   --destructive: oklch(55% 0.22 25);
