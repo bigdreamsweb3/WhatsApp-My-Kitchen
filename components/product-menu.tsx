@@ -1,21 +1,18 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { productCategories } from "@/lib/data/products";
-import { ProductCard } from "./product-card"; // Adjust path if needed
-
-// Use the interfaces you already defined
-import type { Product } from "@/lib/data/products"; // or wherever Product is defined
+import { productCategories, type Product } from "@/lib/data/products";
+import { ProductCard } from "./product-card";
 
 interface MenuSectionProps {
   onAddToCart: (product: Product, quantity: number) => void;
-  onBuyNow: (product: Product) => void;
 }
 
-export function ProductMenu({ onAddToCart, onBuyNow }: MenuSectionProps) {
+export function ProductMenu({ onAddToCart }: MenuSectionProps) {
   const [activeCategory, setActiveCategory] = useState(
     productCategories[0]?.id ?? ""
   );
+  const [activeCardWithSuggestions, setActiveCardWithSuggestions] = useState<string | null>(null);
 
   const categoryRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
@@ -25,6 +22,18 @@ export function ProductMenu({ onAddToCart, onBuyNow }: MenuSectionProps) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
       setActiveCategory(categoryId);
     }
+  };
+
+  const handleAddToCart = (product: Product, quantity: number) => {
+    onAddToCart(product, quantity);
+  };
+
+  const handleShowSuggestions = (productId: string) => {
+    setActiveCardWithSuggestions(productId);
+  };
+
+  const handleHideSuggestions = () => {
+    setActiveCardWithSuggestions(null);
   };
 
   return (
@@ -40,7 +49,9 @@ export function ProductMenu({ onAddToCart, onBuyNow }: MenuSectionProps) {
               <div key={category.id} className="flex items-center">
                 <button
                   onClick={() => scrollToCategory(category.id)}
-                  aria-current={activeCategory === category.id ? "page" : undefined}
+                  aria-current={
+                    activeCategory === category.id ? "page" : undefined
+                  }
                   className={`px-2 py-1 rounded-full whitespace-nowrap text-sm font-medium flex-shrink-0 transition-all ${activeCategory === category.id
                     ? "bg-green-600 text-white shadow-md"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -49,17 +60,21 @@ export function ProductMenu({ onAddToCart, onBuyNow }: MenuSectionProps) {
                   <span>{category.name}</span>
                 </button>
 
-                <span className=" -translate-x-3" style={{
-                  maskImage: `
-                linear-gradient(to left, black 0%, black 20%, transparent 100%),
-              `,
-                  WebkitMaskImage: `
-                linear-gradient(to left, black 0%, black 20%, transparent 100%),
-              `,
-                  maskComposite: "intersect",
-                  WebkitMaskComposite: "source-in",
-                }}>{category.emoji}</span>
-
+                <span
+                  className=" -translate-x-3"
+                  style={{
+                    maskImage: `
+                  linear-gradient(to left, black 0%, black 20%, transparent 100%),
+                `,
+                    WebkitMaskImage: `
+                  linear-gradient(to left, black 0%, black 20%, transparent 100%),
+                `,
+                    maskComposite: "intersect",
+                    WebkitMaskComposite: "source-in",
+                  }}
+                >
+                  {category.emoji}
+                </span>
               </div>
             ))}
           </div>
@@ -91,8 +106,17 @@ export function ProductMenu({ onAddToCart, onBuyNow }: MenuSectionProps) {
                   <ProductCard
                     key={product.id}
                     product={product}
-                    onAddToCart={(qty) => onAddToCart(product, qty)}
-                    onBuyNow={() => onBuyNow(product)}
+                    onAddToCart={(qty, suggestedProduct) => {
+                      if (suggestedProduct) {
+                        handleAddToCart(suggestedProduct, qty);
+                      } else {
+                        handleAddToCart(product, qty);
+                      }
+                    }}
+                    showSuggestions={activeCardWithSuggestions === product.id}
+                    onShowSuggestions={() => handleShowSuggestions(product.id)}
+                    onHideSuggestions={handleHideSuggestions}
+                    onScrollToCategory={scrollToCategory}
                   />
                 ))}
               </div>

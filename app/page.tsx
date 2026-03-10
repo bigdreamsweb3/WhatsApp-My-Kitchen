@@ -37,6 +37,10 @@ export default function HomePage() {
     document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" })
   }, [])
 
+  const handleAddToCart = useCallback((product: any, quantity: number) => {
+    addToCart(product, quantity)
+  }, [addToCart])
+
   return (
     <div className="min-h-screen bg-white font-sans">
       <Header onOrderClick={scrollToMenu} />
@@ -45,7 +49,7 @@ export default function HomePage() {
       <CartButton itemCount={itemCount} onClick={openCart} />
 
       <main>
-        <MenuSection onAddToCart={addToCart} onBuyNow={buyNow} />
+        <MenuSection onAddToCart={handleAddToCart} />
         <TestimonialsSection />
         <ContactSection />
       </main>

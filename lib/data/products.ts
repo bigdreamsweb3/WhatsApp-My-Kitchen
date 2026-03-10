@@ -2,11 +2,11 @@ export interface Product {
   id: string;
   name: string;
   description: string;
-  price: number;
+  price: number; // Now in NGN
   rating?: "Highly rated" | string | number;
   calories?: string;
   tags: string[];
-  imageUrl: string; // now required – all products have one
+  imageUrl: string;
 }
 
 export interface Category {
@@ -17,105 +17,13 @@ export interface Category {
   products: Product[];
 }
 
+export interface SuggestionGroup {
+  categoryId: string;
+  category: string;
+  items: Product[];
+}
+
 export const productCategories: Category[] = [
-  // {
-  //   id: "meal-deals",
-  //   name: "Meal Deals",
-  //   emoji: "🎁",
-  //   description: "Good value everyday",
-  //   products: [
-  //     {
-  //       id: "flavor-fix-wings",
-  //       name: '"The Flavour Fix" Wings (For 1)',
-  //       description: "8 wings, 3 tenders and regular seasoned fries",
-  //       price: "17.50",
-  //       rating: "Highly rated",
-  //       calories: "1467 kcal",
-  //       tags: ["Popular", "Wings"],
-  //       imageUrl:
-  //         "https://images.pexels.com/photos/7734563/pexels-photo-7734563.jpeg?auto=compress&cs=tinysrgb&w=800",
-  //     },
-  //     {
-  //       id: "flavor-fix-boneless",
-  //       name: '"The Flavour Fix" Boneless (For 1)',
-  //       description: "8 boneless, 3 tenders and regular seasoned fries",
-  //       price: "17.50",
-  //       rating: "Highly rated",
-  //       calories: "1264 kcal",
-  //       tags: ["Popular", "Boneless"],
-  //       imageUrl:
-  //         "https://onestophalal.com/cdn/shop/articles/chicken_tenders_and_fries_1200x.jpg?v=1719876668",
-  //     },
-  //     {
-  //       id: "flavor-craver",
-  //       name: '"The Flavour Craver" (For 2)',
-  //       description:
-  //         "12 wings, 12 boneless, 3 tenders, large seasoned fries and 2 dips",
-  //       price: "29.50",
-  //       // rating: null,
-  //       // calories: null,
-  //       tags: ["For 2"],
-  //       imageUrl:
-  //         "https://thumbs.dreamstime.com/b/appetizing-close-up-platter-featuring-crispy-fried-chicken-wings-coated-sweet-savory-glaze-sprinkled-sesame-407932981.jpg",
-  //     },
-  //     {
-  //       id: "crowd-pleaser",
-  //       name: '"The Crowd Pleaser" (For 5 or more)',
-  //       description: "50 wings, 50 boneless, 3 large seasoned fries and 6 dips",
-  //       price: "100.00",
-  //       // rating: null,
-  //       // calories: null,
-  //       tags: ["For Groups"],
-  //       imageUrl:
-  //         "https://tb-static.uber.com/prod/image-proc/processed_images/c36c19dd84b2e9ed89e1062442dc38bb/268ee1a1296808aa6eae11eb597de84d.jpeg",
-  //     },
-  //   ],
-  // },
-  {
-    id: "boneless",
-    name: "Boneless",
-    emoji: "🦴",
-    description:
-      "100% all-white chicken breast meat, hand tossed in any of our 10 house flavours",
-    products: [
-      {
-        id: "boneless-8",
-        name: "8 Pieces Boneless",
-        description:
-          "No bones about it. 100% all-white breast meat. 0% bones & 110% flavour",
-        price: 9.25,
-        rating: "Highly rated",
-        calories: "420 kcal",
-        tags: ["Boneless"],
-        imageUrl:
-          "https://thumbs.dreamstime.com/b/crispy-fried-chicken-tenders-creamy-dipping-sauce-fresh-parsley-garnish-generative-ai-golden-brown-being-dipped-437133664.jpg",
-      },
-      {
-        id: "boneless-10",
-        name: "10 Pieces Boneless",
-        description:
-          "No bones about it. 100% all-white breast meat. 0% bones & 110% flavour",
-        price: 11.25,
-        // rating: null,
-        calories: "526 kcal",
-        tags: ["Boneless"],
-        imageUrl:
-          "https://www.thedailymeal.com/img/gallery/6-best-and-6-worst-fast-food-chicken-tenders/intro-1711554292.jpg",
-      },
-      {
-        id: "boneless-12",
-        name: "12 Pieces Boneless",
-        description:
-          "No bones about it. 100% all-white breast meat. 0% bones & 110% flavour",
-        price: 12.5,
-        // rating: null,
-        calories: "631 kcal",
-        tags: ["Boneless", "Popular"],
-        imageUrl:
-          "https://thumbs.dreamstime.com/b/crispy-golden-chicken-tenders-arranged-neatly-white-plate-accompanied-small-bowl-rich-red-dipping-sauce-creating-397021623.jpg",
-      },
-    ],
-  },
   {
     id: "wings",
     name: "Wings",
@@ -128,70 +36,356 @@ export const productCategories: Category[] = [
         name: "8 Pieces Wings",
         description:
           "Our classic wings are naked fried, 10 ways to get your flavour on",
-        price: 9.5,
-        // rating: null,
+        price: 9500,
         calories: "623 kcal",
         tags: ["Wings"],
-        imageUrl:
-          "https://thumbs.dreamstime.com/b/close-up-photo-crispy-fried-chicken-wings-appetizing-golden-brown-covered-sauce-food-white-background-editorial-421300388.jpg",
+        imageUrl: "/menu/wings/8wings.jpg", // Saucy fried wings
       },
       {
         id: "wings-10",
         name: "10 Pieces Wings",
         description:
           "Our classic wings are naked fried, 10 ways to get your flavour on",
-        price: 11.25,
-        // rating: null,
+        price: 11500,
         calories: "778 kcal",
         tags: ["Wings"],
-        imageUrl:
-          "https://thumbs.dreamstime.com/b/crispy-fried-chicken-wings-close-up-appetizing-dish-metallic-grid-golden-brown-color-juicy-tender-meat-tasty-snack-fast-food-385075798.jpg",
+        imageUrl: "/menu/wings/10wings.jpg",
       },
       {
         id: "wings-12",
         name: "12 Pieces Wings",
         description:
           "Our classic wings are naked fried, 10 ways to get your flavour on",
-        price: 12.5,
-        // rating: null,
+        price: 13500,
         calories: "932 kcal",
         tags: ["Wings"],
-        imageUrl:
-          "https://thumbs.dreamstime.com/b/close-up-shot-showcases-delectable-serving-fried-chicken-wings-their-crispy-golden-brown-skin-contrasting-dark-400904288.jpg",
+        imageUrl: "/menu/wings/12wings.jpg",
+      },
+    ],
+  },
+
+  {
+    id: "boneless",
+    name: "Boneless",
+    emoji: "🦴",
+    description:
+      "100% all-white chicken breast meat, hand tossed in any of our 10 house flavours",
+    products: [
+      {
+        id: "boneless-8",
+        name: "8 Pieces Boneless",
+        description:
+          "No bones about it. 100% all-white breast meat. 0% bones & 110% flavour",
+        price: 10500, // ≈ ₦10,500 (mid-range bucket pricing)
+        rating: "Highly rated",
+        calories: "420 kcal",
+        tags: ["Boneless"],
+        imageUrl: "/menu/boneless/8boneless.jpg", // Crispy boneless chicken bites
+      },
+      {
+        id: "boneless-10",
+        name: "10 Pieces Boneless",
+        description:
+          "No bones about it. 100% all-white breast meat. 0% bones & 110% flavour",
+        price: 12800,
+        calories: "526 kcal",
+        tags: ["Boneless"],
+        imageUrl: "/menu/boneless/10boneless.jpg", // Golden fried tenders
+      },
+      {
+        id: "boneless-12",
+        name: "12 Pieces Boneless",
+        description:
+          "No bones about it. 100% all-white breast meat. 0% bones & 110% flavour",
+        price: 14800,
+        calories: "631 kcal",
+        tags: ["Boneless", "Popular"],
+        imageUrl: "/menu/boneless/12boneless.jpg", // Pile of crispy boneless pieces
+      },
+    ],
+  },
+  // {
+  //   id: "tenders",
+  //   name: "Tenders",
+  //   emoji: "🍗",
+  //   description:
+  //     "100% all-white chicken breast meat, cooked to order and hand tossed in any of our 10 house flavours",
+  //   products: [
+  //     {
+  //       id: "tenders-3",
+  //       name: "3 Pieces Tenders",
+  //       description:
+  //         "Serious tenders. 100% all-white breast meat and cooked to perfection",
+  //       price: 6200,
+  //       calories: "337 kcal",
+  //       tags: ["Tenders", "Popular"],
+  //       imageUrl:
+  //         "https://images.unsplash.com/photo-1626645738196-c4427f9106fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Chicken tenders with sauce
+  //     },
+  //     {
+  //       id: "tenders-5",
+  //       name: "5 Pieces Tenders",
+  //       description:
+  //         "Serious tenders. 100% all-white breast meat and cooked to perfection",
+  //       price: 8800,
+  //       rating: "Highly rated",
+  //       calories: "562 kcal",
+  //       tags: ["Tenders"],
+  //       imageUrl:
+  //         "https://images.unsplash.com/photo-1562967916-eb82221dfb92?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Fried chicken tenders
+  //     },
+  //   ],
+  // },
+  {
+    id: "drinks",
+    name: "Drinks",
+    emoji: "🥤",
+    description: "Refresh yourself with our selection of cold beverages",
+    products: [
+      {
+        id: "drink-coke-regular",
+        name: "Regular Coke",
+        description: "Ice-cold classic cola, perfect with any meal",
+        price: 600,
+        tags: ["Drink", "Popular"],
+        imageUrl: "/menu/drinks/regular-coke.jpg", // Coke bottle/can
+      },
+      {
+        id: "drink-coke-zero",
+        name: "Coke Zero",
+        description: "Zero cola",
+        price: 900,
+        tags: ["Drink"],
+        imageUrl: "/menu/drinks/zero-coke.jpg",
+      },
+      {
+        id: "drink-sprite",
+        name: "Sprite",
+        description: "Crisp lemon-lime refreshment",
+        price: 600,
+        tags: ["Drink"],
+        imageUrl: "/menu/drinks/sprite.jpg", // Sprite
+      },
+      {
+        id: "drink-fanta",
+        name: "Fanta Orange",
+        description: "Vibrant fruity taste in a bottle",
+        price: 600,
+        tags: ["Drink"],
+        imageUrl: "/menu/drinks/fanta.jpg", // Orange soda
       },
     ],
   },
   {
-    id: "tenders",
-    name: "Tenders",
-    emoji: "🍗",
-    description:
-      "100% all-white chicken breast meat, cooked to order and hand tossed in any of our 10 house flavours",
+    id: "dips",
+    name: "Dips",
+    emoji: "🍯",
+    description: "Add flavor with our signature sauces and dipping options",
     products: [
       {
-        id: "tenders-3",
-        name: "3 Pieces Tenders",
-        description:
-          "Serious tenders. 100% all-white breast meat and cooked to perfection",
-        price: 6.25,
-        // rating: null,
-        calories: "337 kcal",
-        tags: ["Tenders", "Popular"],
+        id: "sauce-hot",
+        name: "Hot Sauce",
+        description: "Extra spicy kick for heat lovers",
+        price: 500,
+        tags: ["Sauce", "Popular"],
         imageUrl:
-          "https://thumbs.dreamstime.com/b/crispy-chicken-tenders-spicy-sauce-clean-white-surface-food-delight-delicious-displayed-vibrant-offering-visually-382451407.jpg",
+          "https://images.unsplash.com/photo-1621861220497-6e22e5ee1608?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Hot sauce dip
       },
       {
-        id: "tenders-5",
-        name: "5 Pieces Tenders",
-        description:
-          "Serious tenders. 100% all-white breast meat and cooked to perfection",
-        price: 8.75,
-        rating: "Highly rated",
-        calories: "562 kcal",
-        tags: ["Tenders"],
+        id: "sauce-honey",
+        name: "Honey Mustard",
+        description: "Sweet and tangy combination",
+        price: 500,
+        tags: ["Sauce"],
         imageUrl:
-          "https://thumbs.dreamstime.com/b/crispy-fried-chicken-tenders-creamy-dipping-sauce-fresh-parsley-garnish-generative-ai-golden-brown-being-dipped-437133664.jpg",
+          "https://images.unsplash.com/photo-1621861220497-6e22e5ee1608?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "sauce-garlic",
+        name: "Garlic Mayo",
+        description: "Creamy with a garlic punch",
+        price: 500,
+        tags: ["Sauce"],
+        imageUrl:
+          "https://images.unsplash.com/photo-1621861220497-6e22e5ee1608?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "sauce-bbq",
+        name: "BBQ Sauce",
+        description: "Smoky barbecue flavor",
+        price: 500,
+        tags: ["Sauce"],
+        imageUrl:
+          "https://images.unsplash.com/photo-1621861220497-6e22e5ee1608?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      },
+    ],
+  },
+  {
+    id: "addons",
+    name: "Add-ons",
+    emoji: "🍟",
+    description: "Complete your meal with tasty sides and extras",
+    products: [
+      {
+        id: "addon-fries-regular",
+        name: "Regular Fries",
+        description: "Crispy golden fries, lightly seasoned",
+        price: 1800,
+        calories: "350 kcal",
+        tags: ["Side", "Popular"],
+        imageUrl:
+          "https://images.unsplash.com/photo-1585109643930-8d5c9b8b0e3c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // French fries
+      },
+      {
+        id: "addon-fries-large",
+        name: "Large Fries",
+        description: "Extra helping of crispy fries",
+        price: 2800,
+        calories: "500 kcal",
+        tags: ["Side"],
+        imageUrl:
+          "https://images.unsplash.com/photo-1585109643930-8d5c9b8b0e3c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: "addon-coleslaw",
+        name: "Coleslaw",
+        description: "Fresh and crispy cabbage mix",
+        price: 1500,
+        calories: "150 kcal",
+        tags: ["Side"],
+        imageUrl:
+          "https://images.unsplash.com/photo-1625938145319-cb85032e0e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Coleslaw bowl
+      },
+      {
+        id: "addon-corn",
+        name: "Corn Cup",
+        description: "Buttery sweet corn side",
+        price: 1600,
+        calories: "120 kcal",
+        tags: ["Side"],
+        imageUrl:
+          "https://images.unsplash.com/photo-1606857521015-7f9fcf423740?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Corn cup/side
       },
     ],
   },
 ];
+
+// The getSuggestedAddOns function remains unchanged as it references product IDs
+// Helper function to get suggested add-ons for a product
+export function getSuggestedAddOns(productId: string): SuggestionGroup[] {
+  const suggestedAddOnsMap: Record<string, string[]> = {
+    // For any boneless/wings/tenders, suggest drinks, sauces, and sides
+    "boneless-8": [
+      "drink-coke-regular",
+      "drink-sprite",
+      "sauce-hot",
+      "sauce-honey",
+      "addon-fries-regular",
+      "addon-coleslaw",
+    ],
+    "boneless-10": [
+      "drink-sprite",
+      "drink-coke-large",
+      "sauce-honey",
+      "sauce-garlic",
+      "addon-fries-large",
+      "addon-corn",
+    ],
+    "boneless-12": [
+      "drink-coke-large",
+      "drink-fanta",
+      "sauce-garlic",
+      "sauce-bbq",
+      "addon-fries-large",
+      "addon-coleslaw",
+    ],
+    "wings-8": [
+      "drink-coke-regular",
+      "drink-sprite",
+      "sauce-bbq",
+      "sauce-hot",
+      "addon-fries-regular",
+      "addon-corn",
+    ],
+    "wings-10": [
+      "drink-sprite",
+      "drink-fanta",
+      "sauce-hot",
+      "sauce-honey",
+      "addon-fries-large",
+      "addon-coleslaw",
+    ],
+    "wings-12": [
+      "drink-fanta",
+      "drink-coke-large",
+      "sauce-honey",
+      "sauce-garlic",
+      "addon-coleslaw",
+      "addon-corn",
+    ],
+    "tenders-3": [
+      "drink-coke-regular",
+      "drink-sprite",
+      "sauce-garlic",
+      "sauce-hot",
+      "addon-fries-regular",
+      "addon-coleslaw",
+    ],
+    "tenders-5": [
+      "drink-sprite",
+      "drink-fanta",
+      "sauce-bbq",
+      "sauce-honey",
+      "addon-fries-large",
+      "addon-corn",
+    ],
+  };
+
+  const suggestedIds = suggestedAddOnsMap[productId] || [
+    "sauce-hot",
+    "sauce-honey",
+    "addon-fries-regular",
+    "addon-coleslaw",
+    "drink-coke-regular",
+    "drink-sprite",
+  ];
+
+  const suggestionMap = new Map<
+    string,
+    { categoryName: string; items: Product[] }
+  >();
+
+  for (const category of productCategories) {
+    for (const product of category.products) {
+      if (suggestedIds.includes(product.id)) {
+        if (!suggestionMap.has(category.id)) {
+          suggestionMap.set(category.id, {
+            categoryName: category.name,
+            items: [],
+          });
+        }
+        suggestionMap.get(category.id)!.items.push(product);
+      }
+    }
+  }
+
+  const suggestionGroups: SuggestionGroup[] = [];
+  for (const [categoryId, { categoryName, items }] of suggestionMap) {
+    suggestionGroups.push({
+      categoryId,
+      category: categoryName,
+      items,
+    });
+  }
+
+  // Sort: dips first, drinks last
+  suggestionGroups.sort((a, b) => {
+    if (a.categoryId === "dips") return -1;
+    if (b.categoryId === "dips") return 1;
+    if (a.categoryId === "drinks") return 1;
+    if (b.categoryId === "drinks") return -1;
+    return 0;
+  });
+
+  return suggestionGroups;
+}

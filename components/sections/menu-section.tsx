@@ -3,7 +3,7 @@
 import Image from "next/image"
 
 import { ProductCard } from "../../components/product-card"
-import type { Product } from "../../components/product-card"
+import type { Product } from "@/lib/data/products"
 import { ProductMenu } from "../product-menu"
 
 // import { products } from "@/lib/data/products"
@@ -27,14 +27,13 @@ const COLUMNS = [
 
 interface MenuSectionProps {
   onAddToCart: (product: Product, quantity: number) => void
-  onBuyNow: (product: Product) => void
 }
 
 export function MenuSection(props: MenuSectionProps) {
   return (
-    <section id="menu" className="relative overflow-hidden">
+    <section id="menu" className="relative">
       {/* Scrolling image columns as background */}
-      <div className="absolute inset-0" aria-hidden="true">
+      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
         <div className="flex h-full gap-2 px-2">
           {COLUMNS.map((column, colIdx) => (
             <div key={colIdx} className="relative flex-1 overflow-hidden">
@@ -75,7 +74,7 @@ export function MenuSection(props: MenuSectionProps) {
       </div>
 
       {/* Foreground content */}
-      <div className="relative z-10 pb-16">
+      <div className="relative z-10">
         {/* Header block with solid backdrop for maximum focus */}
         <div className="flex flex-col items-center -translate-y-[5%]" style={{
           maskImage:
@@ -112,7 +111,7 @@ export function MenuSection(props: MenuSectionProps) {
 
         </div>
 
-        <ProductMenu onAddToCart={props.onAddToCart} onBuyNow={props.onBuyNow} />
+        <ProductMenu onAddToCart={props.onAddToCart} />
       </div>
     </section>
   )
