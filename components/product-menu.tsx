@@ -78,10 +78,10 @@ export function ProductMenu({ onAddToCart }: MenuSectionProps) {
               className="mb-16 scroll-mt-24"
             >
               {/* Category Header Card — side-by-side on md+, stacked on mobile */}
-              <div className="rounded-2xl overflow-hidden mb-8 shadow-md bg-white flex flex-col sm:flex-row h-auto sm:h-44">
+              <div className="rounded-2xl overflow-hidden mb-8 bg-white flex flex-col sm:flex-row h-auto sm:h-44">
 
                 {/* Image: full width on mobile, fixed width on desktop */}
-                <div className="relative w-full sm:w-56 md:w-64 flex-shrink-0 h-48 sm:h-auto">
+                <div className="relative w-full sm:w-56 md:w-64 flex-shrink-0 h-62 sm:h-auto">
                   <Image
                     src={category.imageUrl}
                     alt={category.name}
@@ -92,23 +92,23 @@ export function ProductMenu({ onAddToCart }: MenuSectionProps) {
                 </div>
 
 
-                <div className="relative flex-1 bg-accent">
-                  {/* Dark gradient behind text */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-black/15 to-transparent z-0" />
+                {/* <div className="relative flex-1"> */}
+                {/* Dark gradient behind text */}
+                {/* <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-black/15 to-transparent z-0" /> */}
 
-                  {/* Description */}
-                  <div className="flex flex-col justify-center px-5 py-4 flex-1 z-10 relative ">
-                    <div className="flex items-center gap-2.5 mb-2">
-                      <span className="text-2xl">{category.emoji}</span>
-                      <h2 className="text-xl md:text-2xl font-bold text-white tracking-tight">
-                        {category.name}
-                      </h2>
-                    </div>
-                    <p className="text-white/75 text-sm md:text-base leading-relaxed line-clamp-3">
-                      {category.description}
-                    </p>
+                {/* Description */}
+                <div className="flex flex-col justify-center px-5 py-4 flex-1 z-10 relative ">
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <span className="text-2xl">{category.emoji}</span>
+                    <h2 className="text-xl md:text-2xl font-bold text-gray-600 tracking-tight">
+                      {category.name}
+                    </h2>
                   </div>
+                  <p className="text-gray/75 text-sm md:text-base leading-relaxed line-clamp-3">
+                    {category.description}
+                  </p>
                 </div>
+                {/* </div> */}
 
 
 

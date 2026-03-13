@@ -72,7 +72,7 @@ export const productCategories: Category[] = [
     emoji: "🦴",
     description:
       "100% all-white chicken breast meat, hand tossed in any of our 10 house flavours",
-    imageUrl: "/menu/Category-Wings-3.jpg",
+    imageUrl: "/menu/Category-Boneless-3.jpg",
     products: [
       {
         id: "boneless-8",
