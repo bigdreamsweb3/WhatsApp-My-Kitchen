@@ -1,4 +1,4 @@
-import type { Product, productCategories } from "../data/products";
+import { productCategories, type Product } from "../data/products";
 
 import {
   BRAND_NAME,
@@ -8,11 +8,12 @@ import {
 } from "../constants";
 
 export type CartItem = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   quantity: number;
-  imageUrl: string; // Add this property to match Product interface
+  imageUrl?: string;
+  description?: string;
 };
 
 export interface CheckoutForm {
@@ -30,32 +31,98 @@ export function generateWhatsAppMessage(
   const payLink = `${SITE_URL}/pay?amount=${encodeURIComponent(
     total.toString(),
   )}&ref=${encodeURIComponent(ref)}`;
+  const lines: string[] = [];
+  lines.push(`Hello ${BRAND_NAME}!`);
+  lines.push("");
+  lines.push("🛒 Order Summary:");
 
-  let message = `Hello ${BRAND_NAME}!:\n\n`;
-  message += "\u{1F6D2} *Order Summary:*\n";
+  const findByName = (name: string): Product | undefined => {
+    for (const cat of productCategories) {
+      for (const p of cat.products) {
+        if (p.name === name.trim()) return p;
+      }
+    }
+    return undefined;
+  };
 
   cart.forEach((item) => {
-    message += `- ${item.name} x${item.quantity} \u2013 \u20A6${(item.price * item.quantity).toLocaleString()}\n`;
+    lines.push(`- ${item.name}`);
+    lines.push(`  Quantity: ${item.quantity}`);
+
+    if (item.description) {
+      const parts = item.description.split(" | ");
+      parts.forEach((part) => {
+        const p = part.trim();
+        if (p.startsWith("Dip:")) {
+          const free = p.replace(/^Dip:\s*/i, "");
+          lines.push(`  Free Dip: ${free}`);
+        } else if (p.startsWith("Extra Dips:")) {
+          const list = p.replace(/^Extra Dips:\s*/i, "").split(",");
+          lines.push(`  Extra Dips:`);
+          list.forEach((name) => {
+            const prod = findByName(name);
+            const price = prod ? `₦${prod.price.toLocaleString()}` : "";
+            lines.push(`    • ${name.trim()} ${price}`);
+          });
+        } else if (p.startsWith("Drinks:")) {
+          const list = p.replace(/^Drinks:\s*/i, "").split(",");
+          lines.push(`  Drinks:`);
+          list.forEach((entry) => {
+            const m = entry.trim().match(/(.+?) x(\d+)$/);
+            if (m) {
+              const name = m[1].trim();
+              const qty = parseInt(m[2], 10) || 1;
+              const prod = findByName(name);
+              const price = prod ? prod.price * qty : 0;
+              lines.push(`    • ${name} ×${qty} – ₦${price.toLocaleString()}`);
+            } else {
+              const name = entry.trim();
+              const prod = findByName(name);
+              const price = prod ? prod.price : 0;
+              lines.push(`    • ${name} – ₦${price.toLocaleString()}`);
+            }
+          });
+        } else {
+          lines.push(`  ${p}`);
+        }
+      });
+    }
+
+    lines.push(
+      `  Item total: ₦${(item.price * item.quantity).toLocaleString()}`,
+    );
+    lines.push("");
   });
 
-  message += `\n*Total: \u20A6${total.toLocaleString()}*\n\n`;
+  lines.push(`*Total: ₦${total.toLocaleString()}*`);
+  lines.push("");
 
   if (form.address) {
-    message += `\u{1F4CD} *Delivery Address:*\n${form.address}\n\n`;
+    lines.push(`📍 Delivery Address:`);
+    lines.push(form.address);
+    lines.push("");
   }
 
   if (form.phone) {
-    message += `\u{1F4F1} *Phone Number:*\n${form.phone}\n\n`;
+    lines.push(`📱 Phone Number:`);
+    lines.push(form.phone);
+    lines.push("");
   }
 
   if (form.notes) {
-    message += `\u{1F4DD} *Notes:*\n${form.notes}\n`;
+    lines.push(`📝 Notes:`);
+    lines.push(form.notes);
+    lines.push("");
   }
 
-  // Append payment details & link for customer to complete payment on site
-  message += `\n*Payment:*\nPlease pay the exact amount to ${PAYMENT_ACCOUNT.bankName} ${PAYMENT_ACCOUNT.accountNumber} (${PAYMENT_ACCOUNT.accountName}).\n`;
-  message += `\nComplete payment here: ${payLink}\n`;
+  lines.push(`*Payment:*`);
+  lines.push(
+    `Please pay the exact amount to ${PAYMENT_ACCOUNT.bankName} ${PAYMENT_ACCOUNT.accountNumber} (${PAYMENT_ACCOUNT.accountName}).`,
+  );
+  lines.push("");
+  lines.push(`Complete payment here: ${payLink}`);
 
+  const message = lines.join("\n");
   return encodeURIComponent(message);
 }
 

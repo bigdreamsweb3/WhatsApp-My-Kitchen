@@ -5,23 +5,32 @@ type Product = (typeof products)[number];
 
 export function addItemToCart(
   cart: CartItem[],
-  product: Product,
+  product: Product | Partial<CartItem>,
   quantity: number = 1,
 ): CartItem[] {
-  const existingItem = cart.find((item) => item.id === product.id);
+  const prodId = (product as any).id as string;
+  const existingItem = cart.find((item) => item.id === prodId);
   if (existingItem) {
     return cart.map((item) =>
-      item.id === product.id
+      item.id === prodId
         ? { ...item, quantity: item.quantity + quantity }
         : item,
     );
   }
-  return [...cart, { ...product, quantity }];
+  const newItem: CartItem = {
+    id: prodId,
+    name: (product as any).name || "Item",
+    price: (product as any).price || 0,
+    quantity,
+    imageUrl: (product as any).imageUrl || (product as any).image || undefined,
+    description: (product as any).description,
+  };
+  return [...cart, newItem];
 }
 
 export function updateItemQuantity(
   cart: CartItem[],
-  productId: number,
+  productId: string,
   newQuantity: number,
 ): CartItem[] {
   if (newQuantity <= 0) {
@@ -34,7 +43,7 @@ export function updateItemQuantity(
 
 export function removeItemFromCart(
   cart: CartItem[],
-  productId: number,
+  productId: string,
 ): CartItem[] {
   return cart.filter((item) => item.id !== productId);
 }

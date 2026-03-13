@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react"
 import { PAYMENT_ACCOUNT, PAYMENT_INSTRUCTIONS, BRAND_NAME, WHATSAPP_BASE_URL } from "../../lib/constants"
 
-export default function PaymentClient({ amountParam, refParam }: { amountParam: string; refParam: string }) {
-    const amount = amountParam || "0"
-    const ref = refParam || "-"
+export default function PaymentClient({ amountParam, refParam }: { amountParam?: string; refParam?: string }) {
+    const [amount, setAmount] = useState(amountParam ?? "0")
+    const [ref, setRef] = useState(refParam ?? "-")
 
     const [copied, setCopied] = useState(false)
     const [showUpload, setShowUpload] = useState(false)
@@ -19,39 +19,68 @@ export default function PaymentClient({ amountParam, refParam }: { amountParam: 
         return () => clearTimeout(t)
     }, [copied])
 
+    // Fallback: if server didn't provide params, read query string on client
+    useEffect(() => {
+        try {
+            const params = new URLSearchParams(window.location.search)
+            const a = params.get("amount")
+            const r = params.get("ref")
+            if (a && a !== amount) setAmount(a)
+            if (r && r !== ref) setRef(r)
+        } catch (e) {
+            // ignore in non-browser env
+        }
+    }, [])
+
     async function copyAccount() {
-        const text = `${PAYMENT_ACCOUNT.bankName} ${PAYMENT_ACCOUNT.accountNumber} (${PAYMENT_ACCOUNT.accountName})`
-        await navigator.clipboard.writeText(text)
-        setCopied(true)
+        // copy only the raw account number as requested
+        const text = `${PAYMENT_ACCOUNT.accountNumber}`
+        try {
+            await navigator.clipboard.writeText(text)
+            setCopied(true)
+        } catch (err) {
+            // fallback: try execCommand (very old browsers)
+            const ta = document.createElement("textarea")
+            ta.value = text
+            document.body.appendChild(ta)
+            ta.select()
+            try {
+                document.execCommand("copy")
+                setCopied(true)
+            } catch (_) {
+                // ignore
+            }
+            ta.remove()
+        }
     }
 
     return (
-        <main className="min-h-screen flex items-center justify-center p-6 bg-white">
-            <div className="max-w-xl w-full bg-white rounded-2xl shadow-lg p-6">
+        <main className="min-h-screen flex items-center justify-center p-6 bg-[var(--color-background)] text-[var(--color-foreground)]">
+            <div className="max-w-xl w-full bg-[var(--color-card)] rounded-2xl shadow-lg p-6">
                 <h1 className="text-2xl font-black mb-4">Complete Payment</h1>
-                <p className="text-sm text-muted-foreground mb-6">Reference: <span className="font-mono">{ref}</span></p>
+                <p className="text-sm text-[var(--color-muted-foreground)] mb-6">Reference: <span className="font-mono">{ref}</span></p>
 
                 <div className="mb-4">
-                    <div className="text-sm text-gray-600">Amount</div>
-                    <div className="text-3xl font-black text-foreground">₦{Number(amount).toLocaleString()}</div>
+                    <div className="text-sm text-[var(--color-muted-foreground)]">Amount</div>
+                    <div className="text-3xl font-black text-[var(--color-foreground)]">₦{Number(amount).toLocaleString()}</div>
                 </div>
 
                 <div className="mb-6">
-                    <div className="text-sm text-gray-600">Pay to</div>
+                    <div className="text-sm text-[var(--color-muted-foreground)]">Pay to</div>
                     <div className="mt-2 flex items-center gap-3">
                         <div>
                             <div className="font-bold">{PAYMENT_ACCOUNT.accountName}</div>
-                            <div className="text-sm text-gray-600">{PAYMENT_ACCOUNT.bankName} — {PAYMENT_ACCOUNT.accountNumber}</div>
+                            <div className="text-sm text-[var(--color-muted-foreground)]">{PAYMENT_ACCOUNT.bankName} — <span className="font-mono">{PAYMENT_ACCOUNT.accountNumber}</span></div>
                         </div>
-                        <button onClick={copyAccount} className="ml-auto px-3 py-2 bg-primary text-primary-foreground rounded">{copied ? 'Copied' : 'Copy'}</button>
+                        <button onClick={copyAccount} className="ml-auto px-3 py-2 bg-[var(--color-primary)] text-[var(--color-primary-foreground)] rounded">{copied ? 'Copied' : 'Copy'}</button>
                     </div>
                 </div>
 
-                <p className="text-sm text-gray-600 mb-4">{PAYMENT_INSTRUCTIONS}</p>
+                <p className="text-sm text-[var(--color-muted-foreground)] mb-4">{PAYMENT_INSTRUCTIONS}</p>
 
                 <div className="flex gap-3">
-                    <a href="/" className="px-4 py-2 border rounded">Return to site</a>
-                    <button onClick={() => setShowUpload(true)} className="px-4 py-2 bg-[var(--color-primary)] text-white rounded">I paid — confirm</button>
+                    <a href="/" className="px-4 py-2 border rounded bg-transparent">Return to site</a>
+                    <button onClick={() => setShowUpload(true)} className="px-4 py-2 bg-[#25D366] hover:bg-[#1da851] text-white rounded">I paid — confirm</button>
                 </div>
 
                 {showUpload && (

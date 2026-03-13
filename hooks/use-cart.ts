@@ -48,13 +48,13 @@ export function useCart() {
   }, []);
 
   const updateQuantity = useCallback(
-    (productId: number, newQuantity: number) => {
+    (productId: string, newQuantity: number) => {
       setCart((prev) => updateItemQuantity(prev, productId, newQuantity));
     },
     [],
   );
 
-  const removeFromCart = useCallback((productId: number) => {
+  const removeFromCart = useCallback((productId: string) => {
     setCart((prev) => removeItemFromCart(prev, productId));
   }, []);
 

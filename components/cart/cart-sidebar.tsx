@@ -10,8 +10,9 @@ interface CartSidebarProps {
   total: number
   checkoutForm: CheckoutForm
   onClose: () => void
-  onUpdateQuantity: (productId: number, newQuantity: number) => void
-  onRemove: (productId: number) => void
+  onUpdateQuantity: (productId: string, newQuantity: number) => void
+  onRemove?: (productId: string) => void
+  onRemoveItem?: (productId: string) => void
   onClearCart: () => void
   onCheckout: () => void
   onUpdateField: (field: keyof CheckoutForm, value: string) => void
@@ -88,8 +89,9 @@ interface FilledCartProps {
   cart: CartItem[]
   total: number
   checkoutForm: CheckoutForm
-  onUpdateQuantity: (productId: number, newQuantity: number) => void
-  onRemove: (productId: number) => void
+  onUpdateQuantity: (productId: string, newQuantity: number) => void
+  onRemove?: (productId: string) => void
+  onRemoveItem?: (productId: string) => void
   onClearCart: () => void
   onCheckout: () => void
   onUpdateField: (field: keyof CheckoutForm, value: string) => void
@@ -101,10 +103,16 @@ function FilledCart({
   checkoutForm,
   onUpdateQuantity,
   onRemove,
+  onRemoveItem,
   onClearCart,
   onCheckout,
   onUpdateField,
 }: FilledCartProps) {
+  const handleRemove = (id: string) => {
+    if (onRemove) return onRemove(id)
+    if (onRemoveItem) return onRemoveItem(id)
+  }
+
   return (
     <>
       <div className="space-y-4 mb-6">
@@ -113,7 +121,7 @@ function FilledCart({
             key={item.id}
             item={item}
             onUpdateQuantity={onUpdateQuantity}
-            onRemove={onRemove}
+            onRemove={handleRemove}
           />
         ))}
       </div>

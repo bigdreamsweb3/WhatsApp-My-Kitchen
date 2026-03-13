@@ -8,8 +8,8 @@ import { Hero } from "@/components/hero"
 import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { ContactSection } from "@/components/sections/contact-section"
 import { SiteFooter } from "@/components/site-footer"
-import { CartButton } from "@/components/cart-button"
-import { CartSidebar } from "@/components/cart-sidebar"
+import { CartButton } from "@/components/cart/cart-button"
+import { CartSidebar } from "@/components/cart/cart-sidebar"
 import { MenuSection } from "@/components/sections/menu-section"
 
 

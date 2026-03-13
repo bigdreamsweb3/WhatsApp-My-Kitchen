@@ -13,8 +13,6 @@ export function ProductMenu({ onAddToCart }: MenuSectionProps) {
   const [activeCategory, setActiveCategory] = useState(
     productCategories[0]?.id ?? ""
   );
-  const [activeCardWithSuggestions, setActiveCardWithSuggestions] = useState<string | null>(null);
-
   const categoryRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const scrollToCategory = (categoryId: string) => {
@@ -29,20 +27,12 @@ export function ProductMenu({ onAddToCart }: MenuSectionProps) {
     onAddToCart(product, quantity);
   };
 
-  const handleShowSuggestions = (productId: string) => {
-    setActiveCardWithSuggestions(productId);
-  };
-
-  const handleHideSuggestions = () => {
-    setActiveCardWithSuggestions(null);
-  };
-
   return (
-    <div className="bg-background min-h-screen max-w-6xl mx-auto -translate-y-2">
+    <div className="bg-background min-h-screen max-w-6xl mx-auto">
       {/* Sticky Category Navigation */}
       <nav
         aria-label="Product categories"
-        className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-sm"
+        className="sticky top-0 z-40 bg-card/95 border-b border-border backdrop-blur-md shadow-sm"
       >
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex overflow-x-auto gap-1.5 py-3 -mx-4 sm:mx-0 px-4 sm:px-0 scrollbar-hide">
@@ -52,8 +42,8 @@ export function ProductMenu({ onAddToCart }: MenuSectionProps) {
                   onClick={() => scrollToCategory(category.id)}
                   aria-current={activeCategory === category.id ? "page" : undefined}
                   className={`px-3 py-1.5 rounded-full whitespace-nowrap text-sm font-medium flex-shrink-0 transition-all ${activeCategory === category.id
-                    ? "bg-green-600 text-white shadow-md"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    ? "bg-primary text-primary-foreground shadow-md"
+                    : "bg-muted text-muted-foreground hover:bg-primary/80 hover:text-primary-foreground"
                     }`}
                 >
                   <span>{category.emoji}</span>
@@ -67,7 +57,7 @@ export function ProductMenu({ onAddToCart }: MenuSectionProps) {
 
       {/* Product Sections */}
       <section className="pb-16">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="">
           {productCategories.map((category) => (
             <div
               key={category.id}
@@ -75,65 +65,48 @@ export function ProductMenu({ onAddToCart }: MenuSectionProps) {
               ref={(el) => {
                 if (el) categoryRefs.current[category.id] = el;
               }}
-              className="mb-16 scroll-mt-24"
+              className="scroll-mt-24"
             >
-              {/* Category Header Card — side-by-side on md+, stacked on mobile */}
-              <div className="rounded-2xl overflow-hidden mb-8 bg-white flex flex-col sm:flex-row h-auto sm:h-44">
-
-                {/* Image: full width on mobile, fixed width on desktop */}
-                <div className="relative w-full sm:w-56 md:w-64 flex-shrink-0 h-62 sm:h-auto">
+              {/* Category Header */}
+              <div className="relative pb-8 lg:pb-12">
+                <div className="h-[360px] sm:h-[380px] relative overflow-hidden">
                   <Image
                     src={category.imageUrl}
                     alt={category.name}
                     fill
                     className="object-cover object-center"
-                    sizes="(max-width: 640px) 100vw, 256px"
                   />
-                </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-black/15 to-transparent z-0" />
 
-
-                {/* <div className="relative flex-1"> */}
-                {/* Dark gradient behind text */}
-                {/* <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-black/15 to-transparent z-0" /> */}
-
-                {/* Description */}
-                <div className="flex flex-col justify-center px-5 py-4 flex-1 z-10 relative ">
-                  <div className="flex items-center gap-2.5 mb-2">
-                    <span className="text-2xl">{category.emoji}</span>
-                    <h2 className="text-xl md:text-2xl font-bold text-gray-600 tracking-tight">
-                      {category.name}
-                    </h2>
+                  {/* Category Text Overlay */}
+                  <div className="absolute top-0 right-0 bg-secondary p-3 rounded-b-xl z-10 w-2/4">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-2xl sm:text-6xl">{category.emoji}</span>
+                      <h2 className="text-xl sm:text-4xl font-black text-gray-600">{category.name}</h2>
+                    </div>
+                    <p className="text-zinc-500 text-sm italic text-center uppercase tracking-widest font-bold">
+                      {category.description}
+                    </p>
                   </div>
-                  <p className="text-gray/75 text-sm md:text-base leading-relaxed line-clamp-3">
-                    {category.description}
-                  </p>
                 </div>
-                {/* </div> */}
 
-
-
+                {/* Product Grid Half Overlay */}
+                <div className="relative z-20 -mt-32 sm:-mt-40 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 -translate-y-3.5 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 ">
+                  {category.products.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onAddToCart={(qty, customizedProduct) => {
+                        if (customizedProduct) handleAddToCart(customizedProduct, qty);
+                        else handleAddToCart(product, qty);
+                      }}
+                      onScrollToCategory={scrollToCategory}
+                    />
+                  ))}
+                </div>
               </div>
 
-              {/* Product Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {category.products.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onAddToCart={(qty, suggestedProduct) => {
-                      if (suggestedProduct) {
-                        handleAddToCart(suggestedProduct, qty);
-                      } else {
-                        handleAddToCart(product, qty);
-                      }
-                    }}
-                    showSuggestions={activeCardWithSuggestions === product.id}
-                    onShowSuggestions={() => handleShowSuggestions(product.id)}
-                    onHideSuggestions={handleHideSuggestions}
-                    onScrollToCategory={scrollToCategory}
-                  />
-                ))}
-              </div>
+
             </div>
           ))}
         </div>

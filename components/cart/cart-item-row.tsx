@@ -5,8 +5,8 @@ import type { CartItem } from "@/lib/utils/whatsapp"
 
 interface CartItemRowProps {
   item: CartItem
-  onUpdateQuantity: (productId: number, newQuantity: number) => void
-  onRemove: (productId: number) => void
+  onUpdateQuantity: (productId: string, newQuantity: number) => void
+  onRemove: (productId: string) => void
 }
 
 export function CartItemRow({
@@ -14,15 +14,16 @@ export function CartItemRow({
   onUpdateQuantity,
   onRemove,
 }: CartItemRowProps) {
+  const imgSrc = (item as any).imageUrl ?? (item as any).image ?? "";
+
   return (
     <div className="flex gap-4 bg-secondary/50 p-4 rounded-lg">
-      <img
-        src={item.image}
-        alt={item.name}
-        className="w-20 h-20 object-cover rounded-lg"
-      />
+      <img src={imgSrc} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
       <div className="flex-1">
         <h3 className="font-bold text-foreground">{item.name}</h3>
+        {(item as any).description && (
+          <p className="text-sm text-gray-600">{(item as any).description}</p>
+        )}
         <p className="text-[#FF4500] font-bold">
           {"\u20A6"}{(item.price * item.quantity).toLocaleString()}
         </p>
