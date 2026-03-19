@@ -147,7 +147,7 @@ export function MealCustomization({ product, onAdd, onClose }: MealCustomization
             <div className="relative w-full h-full p-2 sm:p-8 max-w-4xl">
                 <div className="relative w-full h-full bg-white rounded-lg shadow-lg overflow-auto max-h-[90vh]">
                     {/* Header */}
-                    <div className="flex items-center justify-between p-4 border-b sticky top-0 bg-white">
+                    <div className="flex items-center justify-between p-4 border-b sticky top-0 bg-white z-[9999]">
                         <h2 className="text-lg font-bold">{product.name}</h2>
                         <button onClick={onClose} className="p-1 text-gray-500 hover:text-gray-700">
                             <X className="h-5 w-5" />
@@ -167,11 +167,13 @@ export function MealCustomization({ product, onAdd, onClose }: MealCustomization
                                 {product.description && (
                                     <div className="text-sm text-muted-foreground">{product.description}</div>
                                 )}
+
+                                <div className="text-right">
+                                    <div className="text-sm text-muted-foreground">Price</div>
+                                    <div className="text-lg font-semibold text-primary">₦{(product.price || 0).toLocaleString()}</div>
+                                </div>
                             </div>
-                            <div className="text-right">
-                                <div className="text-sm text-muted-foreground">Price</div>
-                                <div className="text-lg font-semibold text-primary">₦{(product.price || 0).toLocaleString()}</div>
-                            </div>
+
                         </div>
 
                         {/* Categories */}
@@ -266,8 +268,12 @@ export function MealCustomization({ product, onAdd, onClose }: MealCustomization
                             </div>
                         )}
 
+
+                    </div>
+
+                    <div className="flex flex-col items-center justify-between p-4 sticky bottom-0 bg-white z-[9999] w-full border-t">
                         {/* Quantity and Total */}
-                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-4 border-t">
+                        <div className="flex items-center justify-between gap-4 w-full">
                             <div className="flex items-center gap-2 bg-gray-50 rounded-md border border-gray-200 px-2 py-1">
                                 <button onClick={decrement} className="p-1 text-gray-600 hover:text-gray-900">
                                     <Minus className="h-4 w-4" />
@@ -285,7 +291,7 @@ export function MealCustomization({ product, onAdd, onClose }: MealCustomization
                         </div>
 
                         {/* Action Button */}
-                        <div className="mt-4">
+                        <div className="mt-4 w-full">
                             <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white" onClick={handleAdd}>
                                 Add to cart
                             </Button>

@@ -1,3 +1,5 @@
+// file: components\sections\menu-section.tsx
+
 "use client"
 
 import Image from "next/image"
@@ -76,7 +78,7 @@ export function MenuSection(props: MenuSectionProps) {
       {/* Foreground content */}
       <div className="relative z-10">
         {/* Header block with solid backdrop for maximum focus */}
-        <div className="flex flex-col items-center -translate-y-[5%]" style={{
+        <div className="flex flex-col items-center" style={{
           maskImage:
             "linear-gradient(to left, black 0%, black 90%, transparent 100%), linear-gradient(to right, black 0%, black 90%, transparent 100%),linear-gradient(to top, black 0%, black 10%, transparent 100%), linear-gradient(to bottom, black 0%, black 10%, transparent 100%),",
           WebkitMaskImage:

@@ -8,52 +8,46 @@ interface HeroProps {
 }
 
 const floatingImages = [
+  // TOP RIGHT - Wings
+
   // {
-  //   src: "/kays-fried-chicken-wings.png",
-  //   alt: "Crispy chicken wings",
-  //   className: "top-[6%] left-[3%] w-28 md:w-40 -rotate-12",
+  //   src: "hero/kays-bufallo-wing-sauce.png",
+  //   alt: "Signature dipping sauce",
+  //   className:
+  //     "top-[10%] right-[8%] md:right-[18%] w-24 sm:w-28 md:w-36 rotate-6 z-30",
   // },
-  {
-    src: "hero/kays-fries.png",
-    alt: "Golden french fries",
-    className: "top-[22%] md:top-[18%] right-[8%] w-28 md:w-36 rotate-6 transform-gpu will-change-transform z-30",
-    //  className="absolute w-24 md:w-32  transform rotate-12 opacity-95"
 
-    //  className: "top-[18%] right-[12%] w-24 md:w-36 rotate-12",
-  },
-
-  // 
+  // LEFT CENTER - Sauce
   {
     src: "hero/kays-bufallo-wing-sauce.png",
     alt: "Signature dipping sauce",
     className:
-      "top-[43%] md:top-[48%] right-[6%] md:right-[14%] w-20 md:w-28 rotate-3 -translate-y-1/2 transform-gpu will-change-transform z-20",
+      "top-[40%] left-[4%] md:left-[14%] w-20 sm:w-24 md:w-28 -rotate-6 z-20",
   },
 
-  // Bottom-Left
+  // RIGHT CENTER - Sauce
   {
     src: "hero/kays-fried-chicken-wings.png",
     alt: "Crispy chicken wings",
-    className: "bottom-[18%] left-[6%] md:left-[10%] w-32 md:w-48 -rotate-6 transform-gpu will-change-transform z-30",
+    className:
+      "top-[48%] right-[4%] md:right-[14%] w-20 sm:w-24 md:w-28 rotate-6 z-20",
   },
 
-  // Bottom-Right
+  // BOTTOM LEFT - Fries
   // {
-  //   src: "hero/kays-fried-chicken-wings.png",
-  //   alt: "Crispy chicken wings",
-  //   className: "bottom-[26%] md:bottom-[18%] right-[6%] md:right-[8%] w-28 md:w-44 rotate-6 transform-gpu will-change-transform z-20",
-  // },
-
-  // 
-  // {
-  //   src: "/kays-fried-chicken-wings.png",
-  //   alt: "Crispy chicken wings",
+  //   src: "hero/kays-fries.png",
+  //   alt: "Golden french fries",
   //   className:
-  //     "top-[42%] left-[1%] md:left-[2%] w-24 md:w-36 -rotate-3 -translate-y-1/2",
+  //     "bottom-[16%] left-[8%] md:left-[20%] w-24 sm:w-28 md:w-32 -rotate-6 z-30",
   // },
 
-  // 
-
+  // BOTTOM RIGHT - Fries
+  // {
+  //   src: "hero/kays-fries.png",
+  //   alt: "Golden french fries",
+  //   className:
+  //     "bottom-[14%] right-[8%] md:right-[20%] w-24 sm:w-28 md:w-32 rotate-6 z-30",
+  // },
 ]
 
 export function Hero({ onScrollToMenu }: HeroProps) {
