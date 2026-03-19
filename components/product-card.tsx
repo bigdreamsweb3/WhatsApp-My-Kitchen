@@ -75,9 +75,10 @@ export function ProductCard({
             </h3>
 
             {/* Package description */}
-            {product.description && (
+            {product.wingsCount && product.maxFlavors && (
               <p className="text-sm text-muted-foreground">
-                {product.description}
+                {product.wingsCount} Wings • {product.maxFlavors} Flavor
+                {product.maxFlavors > 1 ? "s" : ""}
               </p>
             )}
           </div>

@@ -34,7 +34,7 @@ export function generateWhatsAppMessage(
   const lines: string[] = [];
   lines.push(`Hello ${BRAND_NAME}!`);
   lines.push("");
-  lines.push("🛒 Order Summary:");
+  lines.push("🛒 Order:");
 
   const findByName = (name: string): Product | undefined => {
     for (const cat of productCategories) {

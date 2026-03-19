@@ -1,7 +1,7 @@
+import { productCategories } from "../data/products";
 import type { CartItem } from "./whatsapp";
-import { products } from "../data/products";
 
-type Product = (typeof products)[number];
+type Product = (typeof productCategories)[number];
 
 export function addItemToCart(
   cart: CartItem[],

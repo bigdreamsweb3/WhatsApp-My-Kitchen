@@ -12,9 +12,9 @@ export const SITE_URL =
     ? window.location.origin
     : "http://localhost:3000";
 export const PAYMENT_ACCOUNT = {
-  accountName: "Kay's Turks",
-  bankName: "GTBank",
-  accountNumber: "0123456789",
+  accountName: "KAYSTURKS RESTURANT - FAST FOOD",
+  bankName: "MONIE POINT",
+  accountNumber: "8085554134",
 };
 
 export const PAYMENT_INSTRUCTIONS = `Please pay the exact amount to the account above and return to this page to confirm.`;

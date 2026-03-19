@@ -76,6 +76,9 @@ export function useCart() {
     }
     const message = generateWhatsAppMessage(cart, total, checkoutForm);
     openWhatsApp(message);
+    // Clear cart and reset form after checkout
+    setCart([]);
+    setCheckoutForm({ address: "", phone: "", notes: "" });
   }, [cart, total, checkoutForm]);
 
   const buyNow = useCallback((product: Product) => {

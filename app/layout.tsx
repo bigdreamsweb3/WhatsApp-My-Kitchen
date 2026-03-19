@@ -51,9 +51,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Kay's Turks | Fresh Turkey, Chicken & Fries in Lagos",
+  title: "Kay's Turks | Fresh Turkey, Chicken & Fries in Awka",
   description:
-    "Order fresh crispy chicken, turkey, loaded fries and more from Kay's Turks. Fast delivery in Lagos, Nigeria. Order via WhatsApp!",
+    "Order fresh crispy chicken, turkey, loaded fries and more from Kay's Turks. Fast delivery in Awka, Nigeria. Order via WhatsApp!",
   icons: {
     icon: [
       {
@@ -90,8 +90,9 @@ export default function RootLayout({
       `}
     >
       <body className="antialiased">
-        {children}
         <Toaster />
+        {children}
+
         <Analytics />
       </body>
     </html>

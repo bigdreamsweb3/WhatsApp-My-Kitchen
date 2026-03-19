@@ -3,10 +3,14 @@ export interface Product {
   name: string;
   description: string;
   price: number;
+  imageUrl: string;
+  tags: string[];
+
   rating?: "Highly rated" | string | number;
   calories?: string;
-  tags: string[];
-  imageUrl: string;
+
+  wingsCount?: number;
+  maxFlavors?: number;
 }
 
 export interface Category {
@@ -35,7 +39,9 @@ export const productCategories: Category[] = [
       {
         id: "box-4u",
         name: "4UBOX",
-        description: "6 Wings, 1 flavour",
+        description: "6 Wings",
+        wingsCount: 6,
+        maxFlavors: 1,
         price: 5700,
         tags: ["Wings"],
         imageUrl: "/menu/wings/8wings.jpg",
@@ -43,7 +49,9 @@ export const productCategories: Category[] = [
       {
         id: "box-4u-double",
         name: "4UBOX DOUBLE",
-        description: "12 Wings, 2 flavours",
+        description: "12 Wings",
+        wingsCount: 12,
+        maxFlavors: 2,
         price: 11000,
         tags: ["Wings"],
         imageUrl: "/menu/wings/10wings.jpg",
@@ -51,7 +59,9 @@ export const productCategories: Category[] = [
       {
         id: "box-kaybox-special",
         name: "KAYBOX SPECIAL",
-        description: "18 Wings, 3 flavours",
+        description: "18 Wings",
+        wingsCount: 18,
+        maxFlavors: 3,
         price: 16000,
         tags: ["Wings", "Popular"],
         imageUrl: "/menu/wings/12wings.jpg",
@@ -59,14 +69,15 @@ export const productCategories: Category[] = [
       {
         id: "box-party-mode",
         name: "PARTY MODE",
-        description: "30 Wings with 5 flavours",
+        description: "30 Wings",
+        wingsCount: 30,
+        maxFlavors: 5,
         price: 27000,
         tags: ["Wings"],
         imageUrl: "/menu/wings/30wings.jpg",
       },
     ],
   },
-
   {
     id: "boneless",
     name: "BONELESS BITES",
@@ -110,8 +121,8 @@ export const productCategories: Category[] = [
   },
 
   {
-    id: "refreshment",
-    name: "REFRESHMENT",
+    id: "drinks",
+    name: "Drinks",
     emoji: "🥤",
     description: "Cold refreshing beverages",
     imageUrl: "/menu/Category-Drinks-3.jpg",
@@ -217,112 +228,112 @@ export const productCategories: Category[] = [
     ],
   },
 
-  {
-    id: "dips",
-    name: "DIPS",
-    emoji: "🍯",
-    description: "Add flavor with our signature sauces",
-    imageUrl: "/menu/Category-Wings-3.jpg",
-    products: [
-      {
-        id: "sauce-hot",
-        name: "Hot Sauce",
-        description: "Extra spicy kick",
-        price: 500,
-        tags: ["Sauce"],
-        imageUrl: "/menu/sauces/hot.jpg",
-      },
-      {
-        id: "sauce-honey",
-        name: "Honey Mustard",
-        description: "Sweet and tangy",
-        price: 500,
-        tags: ["Sauce"],
-        imageUrl: "/menu/sauces/honey.jpg",
-      },
-      {
-        id: "sauce-garlic",
-        name: "Garlic Mayo",
-        description: "Creamy garlic dip",
-        price: 500,
-        tags: ["Sauce"],
-        imageUrl: "/menu/sauces/garlic.jpg",
-      },
-      {
-        id: "sauce-bbq",
-        name: "BBQ Sauce",
-        description: "Smoky barbecue flavor",
-        price: 500,
-        tags: ["Sauce"],
-        imageUrl: "/menu/sauces/bbq.jpg",
-      },
-    ],
-  },
+  // {
+  //   id: "dips",
+  //   name: "DIPS",
+  //   emoji: "🍯",
+  //   description: "Add flavor with our signature sauces",
+  //   imageUrl: "/menu/Category-Wings-3.jpg",
+  //   products: [
+  //     {
+  //       id: "sauce-hot",
+  //       name: "Hot Sauce",
+  //       description: "Extra spicy kick",
+  //       price: 500,
+  //       tags: ["Sauce"],
+  //       imageUrl: "/menu/sauces/hot.jpg",
+  //     },
+  //     {
+  //       id: "sauce-honey",
+  //       name: "Honey Mustard",
+  //       description: "Sweet and tangy",
+  //       price: 500,
+  //       tags: ["Sauce"],
+  //       imageUrl: "/menu/sauces/honey.jpg",
+  //     },
+  //     {
+  //       id: "sauce-garlic",
+  //       name: "Garlic Mayo",
+  //       description: "Creamy garlic dip",
+  //       price: 500,
+  //       tags: ["Sauce"],
+  //       imageUrl: "/menu/sauces/garlic.jpg",
+  //     },
+  //     {
+  //       id: "sauce-bbq",
+  //       name: "BBQ Sauce",
+  //       description: "Smoky barbecue flavor",
+  //       price: 500,
+  //       tags: ["Sauce"],
+  //       imageUrl: "/menu/sauces/bbq.jpg",
+  //     },
+  //   ],
+  // },
 ];
 
-export function getSuggestedAddOns(productId: string): SuggestionGroup[] {
-  const suggestedAddOnsMap: Record<string, string[]> = {
-    "box-4u": [
-      "drink-coke",
-      "drink-sprite",
-      "sauce-hot",
-      "addon-fries-regular",
-    ],
-    "box-4u-double": [
-      "drink-fanta",
-      "drink-sprite",
-      "sauce-honey",
-      "addon-fries-large",
-    ],
-    "box-kaybox-special": [
-      "drink-zero-coke",
-      "drink-5alive-small",
-      "sauce-garlic",
-      "addon-plantain",
-    ],
-    "box-party-mode": [
-      "drink-5alive-large",
-      "drink-fanta",
-      "sauce-bbq",
-      "addon-fries-large",
-      "addon-sweet-corn",
-    ],
-  };
+// export function getSuggestedAddOns(productId: string): SuggestionGroup[] {
+//   const suggestedAddOnsMap: Record<string, string[]> = {
+//     "box-4u": [
+//       "drink-coke",
+//       "drink-sprite",
+//       "sauce-hot",
+//       "addon-fries-regular",
+//     ],
+//     "box-4u-double": [
+//       "drink-fanta",
+//       "drink-sprite",
+//       "sauce-honey",
+//       "addon-fries-large",
+//     ],
+//     "box-kaybox-special": [
+//       "drink-zero-coke",
+//       "drink-5alive-small",
+//       "sauce-garlic",
+//       "addon-plantain",
+//     ],
+//     "box-party-mode": [
+//       "drink-5alive-large",
+//       "drink-fanta",
+//       "sauce-bbq",
+//       "addon-fries-large",
+//       "addon-sweet-corn",
+//     ],
+//   };
 
-  const suggestedIds = suggestedAddOnsMap[productId] || [
-    "sauce-hot",
-    "addon-fries-regular",
-    "drink-coke",
-  ];
+//   const suggestedIds = suggestedAddOnsMap[productId] || [
+//     "sauce-hot",
+//     "addon-fries-regular",
+//     "drink-coke",
+//   ];
 
-  const suggestionMap = new Map<
-    string,
-    { categoryName: string; items: Product[] }
-  >();
+//   const suggestionMap = new Map<
+//     string,
+//     { categoryName: string; items: Product[] }
+//   >();
 
-  for (const category of productCategories) {
-    for (const product of category.products) {
-      if (suggestedIds.includes(product.id)) {
-        if (!suggestionMap.has(category.id)) {
-          suggestionMap.set(category.id, {
-            categoryName: category.name,
-            items: [],
-          });
-        }
-        suggestionMap.get(category.id)!.items.push(product);
-      }
-    }
-  }
+//   for (const category of productCategories) {
+//     for (const product of category.products) {
+//       if (suggestedIds.includes(product.id)) {
+//         if (!suggestionMap.has(category.id)) {
+//           suggestionMap.set(category.id, {
+//             categoryName: category.name,
+//             items: [],
+//           });
+//         }
+//         suggestionMap.get(category.id)!.items.push(product);
+//       }
+//     }
+//   }
 
-  const suggestionGroups: SuggestionGroup[] = [];
+//   const suggestionGroups: SuggestionGroup[] = [];
 
-  for (const [categoryId, { categoryName, items }] of suggestionMap) {
-    suggestionGroups.push({
-      categoryId,
-      category: categoryName,
-      items,
-    });
-  }
+//   for (const [categoryId, { categoryName, items }] of suggestionMap) {
+//     suggestionGroups.push({
+//       categoryId,
+//       category: categoryName,
+//       items,
+//     });
+//   }
 
-  return suggestionGroups;
-}
+//   return suggestionGroups;
+// }
