@@ -7,6 +7,7 @@ import {
   Poppins,
 } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
+import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
 
 // const geistSans = GeistSans({
@@ -90,6 +91,7 @@ export default function RootLayout({
     >
       <body className="antialiased">
         {children}
+        <Toaster />
         <Analytics />
       </body>
     </html>

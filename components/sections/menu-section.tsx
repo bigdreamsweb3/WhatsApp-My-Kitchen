@@ -70,7 +70,7 @@ export function MenuSection(props: MenuSectionProps) {
         {/* Heavy dark overlay for readability */}
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
         {/* Top fade */}
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#0F7948] via-[#FF4500]d/80 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-brand-green via-brand-green/80 to-transparent" />
         {/* Bottom fade */}
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background via-background/80 to-transparent" />
       </div>
@@ -86,7 +86,7 @@ export function MenuSection(props: MenuSectionProps) {
           WebkitMaskComposite: "source-in",
           maskComposite: "intersect",
         }}>
-          <div className="relative inline-flex flex-col items-start py-6 px-4 bg-[#0F7948]/20 backdrop-blur-md w-full max-w-7xl mx-auto">
+          <div className="relative inline-flex flex-col items-start py-6 px-4 bg-brand-green/20 backdrop-blur-md w-full max-w-7xl mx-auto">
 
             <div className="flex-wrap justify-between items-center">
 

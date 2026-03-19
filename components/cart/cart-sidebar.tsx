@@ -26,6 +26,7 @@ export function CartSidebar({
   onClose,
   onUpdateQuantity,
   onRemove,
+  onRemoveItem,
   onClearCart,
   onCheckout,
   onUpdateField,
@@ -65,6 +66,7 @@ export function CartSidebar({
               checkoutForm={checkoutForm}
               onUpdateQuantity={onUpdateQuantity}
               onRemove={onRemove}
+              onRemoveItem={onRemoveItem}
               onClearCart={onClearCart}
               onCheckout={onCheckout}
               onUpdateField={onUpdateField}
@@ -136,7 +138,7 @@ function FilledCart({
         </div>
         <div className="flex justify-between items-center text-xl font-black">
           <span>Total</span>
-          <span className="text-[#FF4500]">
+          <span className="text-brand-orange">
             {"\u20A6"}{total.toLocaleString()}
           </span>
         </div>
@@ -149,20 +151,20 @@ function FilledCart({
           placeholder="Delivery Address *"
           value={checkoutForm.address}
           onChange={(e) => onUpdateField("address", e.target.value)}
-          className="w-full p-3 border-2 border-input rounded-lg focus:border-[#FF4500] focus:outline-none bg-background text-foreground"
+          className="w-full p-3 border-2 border-input rounded-lg focus:border-brand-orange focus:outline-none bg-background text-foreground"
         />
         <input
           type="tel"
           placeholder="Phone Number *"
           value={checkoutForm.phone}
           onChange={(e) => onUpdateField("phone", e.target.value)}
-          className="w-full p-3 border-2 border-input rounded-lg focus:border-[#FF4500] focus:outline-none bg-background text-foreground"
+          className="w-full p-3 border-2 border-input rounded-lg focus:border-brand-orange focus:outline-none bg-background text-foreground"
         />
         <textarea
           placeholder="Order Notes (Optional)"
           value={checkoutForm.notes}
           onChange={(e) => onUpdateField("notes", e.target.value)}
-          className="w-full p-3 border-2 border-input rounded-lg focus:border-[#FF4500] focus:outline-none resize-none bg-background text-foreground"
+          className="w-full p-3 border-2 border-input rounded-lg focus:border-brand-orange focus:outline-none resize-none bg-background text-foreground"
           rows={3}
         />
       </div>
@@ -170,7 +172,7 @@ function FilledCart({
       {/* Action Buttons */}
       <button
         onClick={onCheckout}
-        className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white font-bold py-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg mb-3"
+        className="w-full bg-brand-whatsapp hover:bg-brand-whatsapp-hover text-white font-bold py-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg mb-3"
       >
         Checkout on WhatsApp
       </button>

@@ -8,9 +8,9 @@ import {
 
 export function ContactSection() {
   return (
-    <section className="py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
+    <section className="py-16 px-4 bg-linear-to-b from-muted to-background">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl font-black mb-8 text-gray-900 text-balance">
+        <h2 className="text-4xl md:text-5xl font-black mb-8 text-foreground text-balance">
           Get In Touch
         </h2>
 
@@ -19,7 +19,7 @@ export function ContactSection() {
             href={WHATSAPP_BASE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#25D366] hover:bg-[#20BA5A] text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
+            className="bg-brand-whatsapp hover:bg-brand-whatsapp-hover text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
           >
             <Phone size={20} />
             WhatsApp Us
@@ -36,13 +36,13 @@ export function ContactSection() {
           </a>
         </div>
 
-        <div className="flex flex-col gap-3 text-gray-700">
+        <div className="flex flex-col gap-3 text-foreground">
           <p className="flex items-center justify-center gap-2 text-lg">
-            <Phone size={20} className="text-[#FF4500]" />
+            <Phone size={20} className="text-brand-orange" />
             {PHONE_DISPLAY}
           </p>
           <p className="flex items-center justify-center gap-2 text-lg">
-            <MapPin size={20} className="text-[#FF4500]" />
+            <MapPin size={20} className="text-brand-orange" />
             {LOCATION}
           </p>
         </div>

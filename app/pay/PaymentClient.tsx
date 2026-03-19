@@ -80,7 +80,7 @@ export default function PaymentClient({ amountParam, refParam }: { amountParam?:
 
                 <div className="flex gap-3">
                     <a href="/" className="px-4 py-2 border rounded bg-transparent">Return to site</a>
-                    <button onClick={() => setShowUpload(true)} className="px-4 py-2 bg-[#25D366] hover:bg-[#1da851] text-white rounded">I paid — confirm</button>
+                    <button onClick={() => setShowUpload(true)} className="px-4 py-2 bg-brand-whatsapp hover:bg-brand-whatsapp-hover text-white rounded">I paid — confirm</button>
                 </div>
 
                 {showUpload && (

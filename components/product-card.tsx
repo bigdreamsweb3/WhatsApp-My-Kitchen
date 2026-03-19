@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Plus, Minus, X, ChevronRight } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { productCategories, type Product } from "@/lib/data/products";
 import { MealCustomization } from "./meal-customization";
@@ -37,11 +38,13 @@ export function ProductCard({
       setShowCustomization(true);
     } else {
       onAddToCart(1);
+      toast.success(`${product.name} added to cart!`);
     }
   };
 
   const handleAddSuggestedItem = (suggested: Product) => {
     onAddToCart(1, suggested);
+    toast.success(`${suggested.name} added to cart!`);
   };
 
   const increment = () => setQuantity((q) => q + 1);

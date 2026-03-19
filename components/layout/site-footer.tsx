@@ -2,7 +2,7 @@ import { BRAND_NAME } from "@/lib/constants"
 
 export function SiteFooter() {
   return (
-    <footer className="bg-[#1a1a1a] text-white py-8 px-4">
+    <footer className="bg-secondary text-foreground py-8 px-4 border-t border-border">
       <div className="max-w-7xl mx-auto text-center">
         <img
           src="https://ucarecdn.com/37803e63-fc59-4483-b860-360959066d1c/-/format/auto/"

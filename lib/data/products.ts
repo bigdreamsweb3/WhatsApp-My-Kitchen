@@ -27,15 +27,15 @@ export interface SuggestionGroup {
 export const productCategories: Category[] = [
   {
     id: "wings",
-    name: "Wings",
+    name: "WINGS",
     emoji: "🍗",
     description:
-      "Our classic chicken wings are naked, fried and hand tossed in any of our 10 house flavours",
+      "Crispy fried wings tossed in our signature flavours. Bold taste. Serious crunch.",
     imageUrl: "/menu/Category-Wings-3.jpg",
     products: [
       {
         id: "wings-8",
-        name: "8 Pieces Wings",
+        name: "6 Pieces Wings",
         description:
           "Our classic wings are naked fried, 10 ways to get your flavour on",
         price: 9500,
@@ -68,10 +68,51 @@ export const productCategories: Category[] = [
 
   {
     id: "boneless",
-    name: "Boneless",
+    name: "BONELESS BITES",
     emoji: "🦴",
     description:
-      "100% all-white chicken breast meat, hand tossed in any of our 10 house flavours",
+      "Crispy boneless chicken bites tossed in our signature house flavours.",
+    imageUrl: "/menu/Category-Boneless-3.jpg",
+    products: [
+      {
+        id: "boneless-8",
+        name: "8 Pieces Boneless",
+        description:
+          "No bones about it. 100% all-white breast meat. 0% bones & 110% flavour",
+        price: 10500, // ≈ ₦10,500 (mid-range bucket pricing)
+        rating: "Highly rated",
+        calories: "420 kcal",
+        tags: ["Boneless"],
+        imageUrl: "/menu/boneless/8boneless.jpg", // Crispy boneless chicken bites
+      },
+      {
+        id: "boneless-10",
+        name: "10 Pieces Boneless",
+        description:
+          "No bones about it. 100% all-white breast meat. 0% bones & 110% flavour",
+        price: 12800,
+        calories: "526 kcal",
+        tags: ["Boneless"],
+        imageUrl: "/menu/boneless/10boneless.jpg", // Golden fried tenders
+      },
+      {
+        id: "boneless-12",
+        name: "12 Pieces Boneless",
+        description:
+          "No bones about it. 100% all-white breast meat. 0% bones & 110% flavour",
+        price: 14800,
+        calories: "631 kcal",
+        tags: ["Boneless", "Popular"],
+        imageUrl: "/menu/boneless/12boneless.jpg", // Pile of crispy boneless pieces
+      },
+    ],
+  },
+
+  {
+    id: "boss-cuts",
+    name: "BOSS CUTS",
+    emoji: "🔥",
+    description: "Big cuts. Crispy bite. Serious flavor.",
     imageUrl: "/menu/Category-Boneless-3.jpg",
     products: [
       {

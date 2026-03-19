@@ -3,7 +3,8 @@
 import { useCallback } from "react"
 import { useCart } from "@/hooks/use-cart"
 import { Header } from "@/components/header"
-import { Hero } from "@/components/hero"
+
+import { Hero } from "@/components/sections/hero-section"
 // import { MenuSection } from "@/components/menu-section"
 import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { ContactSection } from "@/components/sections/contact-section"
@@ -11,6 +12,7 @@ import { SiteFooter } from "@/components/site-footer"
 import { CartButton } from "@/components/cart/cart-button"
 import { CartSidebar } from "@/components/cart/cart-sidebar"
 import { MenuSection } from "@/components/sections/menu-section"
+
 
 
 
@@ -50,7 +52,7 @@ export default function HomePage() {
 
       <main>
         <MenuSection onAddToCart={handleAddToCart} />
-        <TestimonialsSection />
+        {/* <TestimonialsSection /> */}
         <ContactSection />
       </main>
 
