@@ -41,12 +41,12 @@ export function Header({ onOrderClick }: HeaderProps) {
           className={`h-8 md:h-12 w-auto transition-all duration-700 ease-out ${isLogoVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
           priority
         />
-        {/* <button
+        <button
           onClick={onOrderClick}
           className="bg-brand-orange hover:bg-brand-orange-hover text-white font-bold px-6 py-2 md:px-8 md:py-3 rounded-full transition-all duration-300 transform hover:scale-105"
         >
           Order Now
-        </button> */}
+        </button>
       </div>
     </header>
   )

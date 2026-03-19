@@ -70,7 +70,7 @@ export function Hero({ onScrollToMenu }: HeroProps) {
   }, [])
 
   return (
-    <section className="relative h-screen flex flex-col justify-end items-center overflow-hidden bg-brand-green text-white">
+    <section className="relative h-[670px] md:h-screen flex flex-col justify-end items-center overflow-hidden bg-brand-green text-white">
 
       {/* Centered background image – your original sizing & centering */}
       <div
@@ -108,7 +108,7 @@ export function Hero({ onScrollToMenu }: HeroProps) {
           <div
             key={`${img.src}-${i}`}
             className={`absolute rounded-2xl overflow-hidden transition-all duration-700 ease-out ${img.className} ${isVisible
-              ? `opacity-90 scale-100 animate-hero-float-${i % 1}`
+              ? `opacity-90 scale-100 animate-hero-float-${i % 0.2}`
               : "opacity-0 translate-y-8 scale-90"
               }`}
             style={{
@@ -129,12 +129,12 @@ export function Hero({ onScrollToMenu }: HeroProps) {
       </div>
 
       {/* Freshly Made ribbon – kept top-right */}
-      <div className="absolute top-6 right-6 md:top-8 md:right-10 z-40">
+      {/* <div className="absolute top-6 right-6 md:top-8 md:right-10 z-40">
         <div className="bg-brand-green-dark/90 backdrop-blur-sm text-white text-xs sm:text-sm font-semibold px-3 py-2 rounded-full shadow-lg flex items-center gap-2 border border-brand-gold/30 gap-2">
           <span>Freshly Made</span>
           <Check className="w-4 h-4 bg-brand-green rounded-full text-white" />
         </div>
-      </div>
+      </div> */}
 
       {/* Content moved LOWER to avoid covering central logo/text */}
       <div className="relative z-30 text-center px-6 pb-28 md:pb-36">
