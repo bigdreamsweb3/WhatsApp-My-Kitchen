@@ -6,15 +6,16 @@ export const PHONE_DISPLAY = "+234 913 395 8343";
 export const LOCATION = "Awka, Nigeria";
 export const CART_STORAGE_KEY = "fastfood_cart";
 
-// Site/payment configuration
 export const SITE_URL =
   typeof window !== "undefined"
     ? window.location.origin
     : "http://localhost:3000";
+
 export const PAYMENT_ACCOUNT = {
-  accountName: "KAYSTURKS RESTURANT - FAST FOOD",
-  bankName: "MONIE POINT",
+  accountName: "KAYSTURKS RESTAURANT - FAST FOOD",
+  bankName: "Moniepoint",
   accountNumber: "8085554134",
 };
 
-export const PAYMENT_INSTRUCTIONS = `Please pay the exact amount to the account above and return to this page to confirm.`;
+export const PAYMENT_INSTRUCTIONS =
+  "Please pay the exact amount to the account above and return to this page to confirm.";

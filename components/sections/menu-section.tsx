@@ -1,15 +1,9 @@
-// file: components\sections\menu-section.tsx
-
 "use client"
 
 import Image from "next/image"
 
-import { ProductCard } from "../../components/product-card"
 import type { Product } from "@/lib/data/products"
 import { ProductMenu } from "../product-menu"
-
-// import { products } from "@/lib/data/products"
-
 
 const BG_IMAGES = [
   "/menu/bg-1.jpg",
@@ -20,7 +14,6 @@ const BG_IMAGES = [
   "/menu/bg-6.jpg",
 ]
 
-// Split images into 3 columns, each column loops a different set
 const COLUMNS = [
   [BG_IMAGES[0], BG_IMAGES[1], BG_IMAGES[2], BG_IMAGES[3], BG_IMAGES[4], BG_IMAGES[5]],
   [BG_IMAGES[3], BG_IMAGES[4], BG_IMAGES[5], BG_IMAGES[0], BG_IMAGES[1], BG_IMAGES[2]],
@@ -34,32 +27,21 @@ interface MenuSectionProps {
 export function MenuSection(props: MenuSectionProps) {
   return (
     <section id="menu" className="relative">
-      {/* Scrolling image columns as background */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-        <div className="flex h-full gap-2 px-2">
-          {COLUMNS.map((column, colIdx) => (
-            <div key={colIdx} className="relative flex-1 overflow-hidden">
-              {/* The scrolling strip: duplicated for seamless loop */}
+        <div className="flex h-full gap-2 px-2 -translate-y-4">
+          {COLUMNS.map((column, columnIndex) => (
+            <div key={columnIndex} className="relative flex-1 overflow-hidden">
               <div
-                className={`flex flex-col gap-2 ${colIdx % 2 === 0
-                  ? "animate-menu-scroll-up"
-                  : "animate-menu-scroll-down"
+                className={`flex flex-col gap-2 ${columnIndex % 2 === 0 ? "animate-menu-scroll-up" : "animate-menu-scroll-down"
                   }`}
               >
-                {/* Render twice for seamless infinite loop */}
-                {[...column, ...column].map((src, imgIdx) => (
+                {[...column, ...column].map((src, imageIndex) => (
                   <div
-                    key={`${colIdx}-${imgIdx}`}
-                    className="relative w-full shrink-0 rounded-lg overflow-hidden"
+                    key={`${columnIndex}-${imageIndex}`}
+                    className="relative w-full shrink-0 overflow-hidden rounded-lg"
                     style={{ aspectRatio: "3 / 4" }}
                   >
-                    <Image
-                      src={src}
-                      alt=""
-                      fill
-                      className="object-cover"
-                      sizes="33vw"
-                    />
+                    <Image src={src} alt="" fill className="object-cover" sizes="33vw" />
                   </div>
                 ))}
               </div>
@@ -67,50 +49,27 @@ export function MenuSection(props: MenuSectionProps) {
           ))}
         </div>
 
-        {/* Heavy dark overlay for readability */}
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-        {/* Top fade */}
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-brand-green via-brand-green/80 to-transparent" />
-        {/* Bottom fade */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background via-background/80 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-brand-green via-brand-green/80 to-transparent -translate-y-4" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background via-background/80 to-transparent -translate-y-4" />
       </div>
 
-      {/* Foreground content */}
       <div className="relative z-10">
-        {/* Header block with solid backdrop for maximum focus */}
-        <div className="flex flex-col items-center" style={{
-          maskImage:
-            "linear-gradient(to left, black 0%, black 90%, transparent 100%), linear-gradient(to right, black 0%, black 90%, transparent 100%),linear-gradient(to top, black 0%, black 10%, transparent 100%), linear-gradient(to bottom, black 0%, black 10%, transparent 100%),",
-          WebkitMaskImage:
-            "linear-gradient(to left, black 0%, black 90%, transparent 100%), linear-gradient(to right, black 0%, black 90%, transparent 100%),",
-          WebkitMaskComposite: "source-in",
-          maskComposite: "intersect",
-        }}>
-          <div className="relative inline-flex flex-col items-start py-6 px-4 bg-brand-green/20 backdrop-blur-md w-full max-w-7xl mx-auto">
-
-            <div className="flex-wrap justify-between items-center">
-
-              <span className="text-sm font-semibold uppercase tracking-[0.25em] text-emerald-400 mb-2">
+        <div className="flex flex-col items-center px-4 pt-8 md:px-6 md:pt-12 -translate-y-4">
+          <div className="relative w-full max-w-6xl rounded-[2rem] border border-white/10 bg-brand-green/25 px-6 py-8 shadow-2xl backdrop-blur-md md:px-10">
+            <div className="flex flex-col items-center text-center">
+              <span className="mb-2 text-sm font-semibold uppercase tracking-[0.25em] text-emerald-300">
                 Explore
               </span>
-              <h2 className="text-4xl md:text-6xl font-black text-center text-white text-balance leading-tight whitespace-nowrap">
+              <h2 className="text-balance text-4xl font-black leading-tight text-white md:text-6xl">
                 Our Menu
               </h2>
-
-            </div>
-
-
-            <div className="flex justify-start items-center w-full">
-
-              <p className="mt-3 text-center text-white/70 text-lg max-w-md font-medium">
+              <p className="mt-3 max-w-md text-center text-lg font-medium text-white/75">
                 Fresh, hot, and always delicious
               </p>
+              <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-emerald-400" />
             </div>
-
-
-            <div className="mt-3 h-1 w-16 rounded-full bg-emerald-500" />
           </div>
-
         </div>
 
         <ProductMenu onAddToCart={props.onAddToCart} />

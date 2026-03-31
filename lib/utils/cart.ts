@@ -1,31 +1,45 @@
-import { productCategories } from "../data/products";
+import type { Product } from "../data/products";
 import type { CartItem } from "./whatsapp";
-
-type Product = (typeof productCategories)[number];
 
 export function addItemToCart(
   cart: CartItem[],
   product: Product | Partial<CartItem>,
   quantity: number = 1,
 ): CartItem[] {
-  const prodId = (product as any).id as string;
-  const existingItem = cart.find((item) => item.id === prodId);
+  const productId = (product as CartItem).id;
+  const existingItem = cart.find((item) => item.id === productId);
+
   if (existingItem) {
     return cart.map((item) =>
-      item.id === prodId
+      item.id === productId
         ? { ...item, quantity: item.quantity + quantity }
         : item,
     );
   }
+
   const newItem: CartItem = {
-    id: prodId,
-    name: (product as any).name || "Item",
-    price: (product as any).price || 0,
+    id: productId,
+    name: (product as CartItem).name || "Item",
+    price: (product as CartItem).price || 0,
     quantity,
-    imageUrl: (product as any).imageUrl || (product as any).image || undefined,
-    description: (product as any).description,
+    imageUrl:
+      (product as CartItem).imageUrl || (product as { image?: string }).image,
+    description: (product as CartItem).description,
+    baseProductId: (product as CartItem).baseProductId,
+    customization: (product as CartItem).customization,
   };
+
   return [...cart, newItem];
+}
+
+export function replaceItemInCart(
+  cart: CartItem[],
+  oldItemId: string,
+  product: Product | Partial<CartItem>,
+  quantity: number,
+): CartItem[] {
+  const cartWithoutOldItem = cart.filter((item) => item.id !== oldItemId);
+  return addItemToCart(cartWithoutOldItem, product, quantity);
 }
 
 export function updateItemQuantity(
@@ -36,6 +50,7 @@ export function updateItemQuantity(
   if (newQuantity <= 0) {
     return removeItemFromCart(cart, productId);
   }
+
   return cart.map((item) =>
     item.id === productId ? { ...item, quantity: newQuantity } : item,
   );

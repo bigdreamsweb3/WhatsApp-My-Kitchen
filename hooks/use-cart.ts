@@ -9,6 +9,7 @@ import {
   removeItemFromCart,
   calculateCartTotal,
   getCartItemCount,
+  replaceItemInCart,
 } from "../lib/utils/cart";
 import {
   generateWhatsAppMessage,
@@ -25,8 +26,8 @@ export function useCart() {
     phone: "",
     notes: "",
   });
+  const [hasPendingCheckout, setHasPendingCheckout] = useState(false);
 
-  // Load cart from localStorage on mount
   useEffect(() => {
     const savedCart = localStorage.getItem(CART_STORAGE_KEY);
     if (savedCart) {
@@ -38,28 +39,43 @@ export function useCart() {
     }
   }, []);
 
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
   }, [cart]);
 
+  const resetPendingCheckout = useCallback(() => {
+    setHasPendingCheckout(false);
+  }, []);
+
   const addToCart = useCallback((product: Product, quantity: number = 1) => {
     setCart((prev) => addItemToCart(prev, product, quantity));
-  }, []);
+    resetPendingCheckout();
+  }, [resetPendingCheckout]);
+
+  const replaceCartItem = useCallback(
+    (itemId: string, product: Product, quantity: number) => {
+      setCart((prev) => replaceItemInCart(prev, itemId, product, quantity));
+      resetPendingCheckout();
+    },
+    [resetPendingCheckout],
+  );
 
   const updateQuantity = useCallback(
     (productId: string, newQuantity: number) => {
       setCart((prev) => updateItemQuantity(prev, productId, newQuantity));
+      resetPendingCheckout();
     },
-    [],
+    [resetPendingCheckout],
   );
 
   const removeFromCart = useCallback((productId: string) => {
     setCart((prev) => removeItemFromCart(prev, productId));
-  }, []);
+    resetPendingCheckout();
+  }, [resetPendingCheckout]);
 
   const clearCart = useCallback(() => {
     setCart([]);
+    setHasPendingCheckout(false);
   }, []);
 
   const total = useMemo(() => calculateCartTotal(cart), [cart]);
@@ -74,12 +90,23 @@ export function useCart() {
       alert("Please fill in delivery address and phone number");
       return;
     }
+
     const message = generateWhatsAppMessage(cart, total, checkoutForm);
-    openWhatsApp(message);
-    // Clear cart and reset form after checkout
+    const openedWindow = openWhatsApp(message);
+
+    if (!openedWindow) {
+      alert("We could not open WhatsApp. Please allow pop-ups and try again.");
+      return;
+    }
+
+    setHasPendingCheckout(true);
+  }, [cart, total, checkoutForm]);
+
+  const confirmCheckoutSent = useCallback(() => {
     setCart([]);
     setCheckoutForm({ address: "", phone: "", notes: "" });
-  }, [cart, total, checkoutForm]);
+    setHasPendingCheckout(false);
+  }, []);
 
   const buyNow = useCallback((product: Product) => {
     const message = generateBuyNowMessage(product);
@@ -92,8 +119,9 @@ export function useCart() {
   const updateCheckoutField = useCallback(
     (field: keyof CheckoutForm, value: string) => {
       setCheckoutForm((prev) => ({ ...prev, [field]: value }));
+      resetPendingCheckout();
     },
-    [],
+    [resetPendingCheckout],
   );
 
   return {
@@ -102,11 +130,14 @@ export function useCart() {
     checkoutForm,
     total,
     itemCount,
+    hasPendingCheckout,
     addToCart,
+    replaceCartItem,
     updateQuantity,
     removeFromCart,
     clearCart,
     handleCheckout,
+    confirmCheckoutSent,
     buyNow,
     openCart,
     closeCart,

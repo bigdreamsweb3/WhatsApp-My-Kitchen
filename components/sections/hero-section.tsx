@@ -1,58 +1,31 @@
 "use client"
 
-import { Check } from "lucide-react"
 import Image from "next/image"
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 
 interface HeroProps {
   onScrollToMenu: () => void
 }
 
-// Restored your original floating items (almost 1:1 from first code, minor mobile safety)
 const floatingImages = [
-  // 1. Fries basket – left side (exactly like your image)
   {
-    src: "hero/fries-basket.png",
-
+    src: "/hero/fries-basket.png",
     alt: "Crispy fries in metal basket",
     className:
-      "left-[-7%] md:left-[6%] bottom-[28%] md:bottom-[32%] w-43 sm:w-50 md:w-60 -rotate-[8deg] z-20",
+      "left-[-7%] bottom-[28%] z-20 w-43 -rotate-[8deg] sm:w-50 md:left-[6%] md:bottom-[32%] md:w-60",
   },
-
-  // 2. Small sauce bowl above fries – top-leftish
   {
     src: "/hero/sauce-bowl-top.png",
     alt: "Creamy dipping sauce",
-
     className:
-      "left-[3%] md:left-[20%] top-[32%] md:top-[23%] w-20 sm:w-24 md:w-28 rotate-6 z-30",
+      "left-[3%] top-[32%] z-30 w-20 rotate-6 sm:w-24 md:left-[20%] md:top-[23%] md:w-28",
   },
-
-  // 3. Glazed wings stack – right side (exactly like your image)
   {
     src: "/hero/wings-stack.png",
     alt: "Stack of juicy glazed chicken wings",
     className:
-      "right-[-6%] md:right-[8%] bottom-[28%] md:bottom-[26%] w-44 sm:w-52 md:w-66 rotate-[7deg] z-20",
+      "right-[-6%] bottom-[28%] z-20 w-44 rotate-[7deg] sm:w-52 md:right-[8%] md:bottom-[26%] md:w-66",
   },
-
-  // 4. Chicken tenders / strips at bottom center
-  // {
-  //   // src: "/hero/chicken-tenders.png",
-  //   // alt: "Golden chicken tenders",
-  //   src: "hero/kays-fried-chicken-wings.png",
-  //   alt: "Crispy chicken wings",
-  //   className:
-  //     "block md:hidden top-[26%] right-[8%] md:right-[18%] w-24 sm:w-28 md:w-36 rotate-6 z-30",
-  // },
-
-  // 5. Bottom sauce bowl in front of tenders
-  // {
-  //   src: "hero/kays-bufallo-wing-sauce.png",
-  //   alt: "Signature dipping sauce",
-  //   className:
-  //     "bottom-[18%] left-1/2 translate-x-[45%] md:translate-x-1/2 w-20 sm:w-24 md:w-28 z-30",
-  // },
 ]
 
 export function Hero({ onScrollToMenu }: HeroProps) {
@@ -60,29 +33,29 @@ export function Hero({ onScrollToMenu }: HeroProps) {
 
   useEffect(() => {
     setIsVisible(true)
-    const dispatchDelay = 420
-    const t = setTimeout(() => {
+
+    const timeoutId = setTimeout(() => {
       if (typeof window !== "undefined") {
         window.dispatchEvent(new CustomEvent("hero:brand-visible"))
       }
-    }, dispatchDelay)
-    return () => clearTimeout(t)
+    }, 420)
+
+    return () => clearTimeout(timeoutId)
   }, [])
 
   return (
-    <section className="relative h-[670px] md:h-screen flex flex-col justify-end items-center overflow-hidden bg-brand-green text-white">
-
-      {/* Centered background image – your original sizing & centering */}
+    <section className="relative flex h-[670px] flex-col items-center justify-end overflow-hidden bg-brand-green text-white md:h-screen">
       <div
-        className={`absolute inset-0 bg-no-repeat will-change-transform bg-[length:100%_auto] md:bg-[length:80%_auto] bg-center transition-all duration-800 ease-out -translate-y-10 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
-          }`}
+        className={`absolute inset-0 -translate-y-10 bg-center bg-no-repeat bg-[length:100%_auto] transition-all duration-800 ease-out will-change-transform md:bg-[length:80%_auto] ${
+          isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"
+        }`}
         style={{ backgroundImage: "url('/kays-5.jpg')" }}
       />
 
-      {/* Top-left brand image – restored original */}
       <div
-        className={`absolute top-0 left-0 mt-5 transform-gpu will-change-transform transition-all duration-900 ease-out -translate-y-[20%] ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-105"
-          }`}
+        className={`absolute left-0 top-0 mt-5 -translate-y-[20%] transform-gpu transition-all duration-900 ease-out will-change-transform ${
+          isVisible ? "scale-100 opacity-100" : "scale-105 opacity-0"
+        }`}
         style={{ transitionDelay: "220ms" }}
       >
         <Image
@@ -90,7 +63,7 @@ export function Hero({ onScrollToMenu }: HeroProps) {
           alt="Kay's Turks"
           width={280}
           height={280}
-          className="h-[220px] md:h-[280px] w-auto"
+          className="h-[220px] w-auto md:h-[280px]"
           style={{
             maskImage:
               "linear-gradient(to bottom, black 0%, black 80%, transparent 100%), linear-gradient(to right, black 0%, black 70%, transparent 100%)",
@@ -102,76 +75,73 @@ export function Hero({ onScrollToMenu }: HeroProps) {
         />
       </div>
 
-      {/* Floating food images – your original positions restored */}
       <div className="absolute inset-0 pointer-events-none">
-        {floatingImages.map((img, i) => (
+        {floatingImages.map((image, index) => (
           <div
-            key={`${img.src}-${i}`}
-            className={`absolute rounded-2xl overflow-hidden transition-all duration-700 ease-out ${img.className} ${isVisible
-              ? `opacity-90 scale-100 animate-hero-float-${i % 0.2}`
-              : "opacity-0 translate-y-8 scale-90"
-              }`}
+            key={`${image.src}-${index}`}
+            className={`absolute overflow-hidden rounded-2xl transition-all duration-700 ease-out ${image.className} ${
+              isVisible
+                ? `scale-100 opacity-90 animate-hero-float-${index % 3}`
+                : "translate-y-8 scale-90 opacity-0"
+            }`}
             style={{
-              transitionDelay: `${150 + i * 120}ms`,
-              filter: "saturate(1.12) contrast(1.05) drop-shadow(0 25px 20px rgba(0,0,0,0.38))",
+              transitionDelay: `${150 + index * 120}ms`,
+              filter:
+                "saturate(1.12) contrast(1.05) drop-shadow(0 25px 20px rgba(0,0,0,0.38))",
               transformOrigin: "center center",
             }}
           >
             <Image
-              src={img.src}
-              alt={img.alt}
+              src={image.src}
+              alt={image.alt}
               width={200}
               height={200}
-              className="w-full h-full object-cover"
+              className="h-full w-full object-cover"
             />
           </div>
         ))}
       </div>
 
-      {/* Freshly Made ribbon – kept top-right */}
-      {/* <div className="absolute top-6 right-6 md:top-8 md:right-10 z-40">
-        <div className="bg-brand-green-dark/90 backdrop-blur-sm text-white text-xs sm:text-sm font-semibold px-3 py-2 rounded-full shadow-lg flex items-center gap-2 border border-brand-gold/30 gap-2">
-          <span>Freshly Made</span>
-          <Check className="w-4 h-4 bg-brand-green rounded-full text-white" />
-        </div>
-      </div> */}
-
-      {/* Content moved LOWER to avoid covering central logo/text */}
-      <div className="relative z-30 text-center px-6 pb-28 md:pb-36">
+      <div className="relative z-30 px-6 pb-28 text-center md:pb-36">
         <div
-          className={`transition-all duration-1000 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            }`}
+          className={`transition-all duration-1000 ease-out ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
+          }`}
           style={{ transitionDelay: "400ms" }}
         >
           <button
             onClick={onScrollToMenu}
-            className="inline-block px-10 py-5 bg-brand-button hover:bg-brand-button-hover text-brand-green font-bold text-xl sm:text-2xl rounded-full shadow-2xl transform hover:scale-105 transition-all duration-300 mb-4"
+            className="mb-4 inline-block rounded-full bg-brand-button px-10 py-5 text-xl font-bold text-brand-green shadow-2xl transition-all duration-300 hover:scale-105 hover:bg-brand-button-hover sm:text-2xl"
           >
             ORDER NOW
           </button>
 
-          <p className="text-lg sm:text-2xl md:text-3xl font-medium italic text-brand-button-text tracking-wide drop-shadow-md">
+          <p className="text-lg font-medium italic tracking-wide text-brand-button-text drop-shadow-md sm:text-2xl md:text-3xl">
             Crispy Fries & Juicy Wings
           </p>
         </div>
       </div>
 
-      {/* Triple chevron scroll indicator – absolute bottom, no layout impact */}
       <button
         onClick={onScrollToMenu}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 text-white opacity-80 hover:opacity-100 transition-opacity duration-300"
+        className="absolute bottom-8 left-1/2 z-40 -translate-x-1/2 text-white opacity-80 transition-opacity duration-300 hover:opacity-100"
         aria-label="Scroll down to menu"
       >
-        <div className="flex flex-col items-center animate-bounce-slow">
-          <svg className="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-          <svg className="w-8 h-8 md:w-10 md:h-10 -mt-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-          <svg className="w-8 h-8 md:w-10 md:h-10 -mt-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
+        <div className="flex flex-col items-center">
+          {[0, 300, 600].map((delay) => (
+            <svg
+              key={delay}
+              className="h-8 w-8 animate-arrow-wave md:h-10 md:w-10"
+              style={{ animationDelay: `${delay}ms`, marginTop: delay === 0 ? 0 : -20 }}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          ))}
         </div>
       </button>
     </section>

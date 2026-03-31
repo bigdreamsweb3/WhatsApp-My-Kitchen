@@ -1,10 +1,14 @@
-import { productCategories, type Product } from "../data/products";
+import {
+  type Product,
+  type ProductCustomization,
+  productCategories,
+} from "../data/products";
 
 import {
   BRAND_NAME,
-  WHATSAPP_BASE_URL,
-  SITE_URL,
   PAYMENT_ACCOUNT,
+  SITE_URL,
+  WHATSAPP_BASE_URL,
 } from "../constants";
 
 export type CartItem = {
@@ -14,6 +18,8 @@ export type CartItem = {
   quantity: number;
   imageUrl?: string;
   description?: string;
+  baseProductId?: string;
+  customization?: ProductCustomization;
 };
 
 export interface CheckoutForm {
@@ -32,14 +38,15 @@ export function generateWhatsAppMessage(
     total.toString(),
   )}&ref=${encodeURIComponent(ref)}`;
   const lines: string[] = [];
+
   lines.push(`Hello ${BRAND_NAME}!`);
   lines.push("");
-  lines.push("🛒 Order:");
+  lines.push("Order:");
 
   const findByName = (name: string): Product | undefined => {
-    for (const cat of productCategories) {
-      for (const p of cat.products) {
-        if (p.name === name.trim()) return p;
+    for (const category of productCategories) {
+      for (const product of category.products) {
+        if (product.name === name.trim()) return product;
       }
     }
     return undefined;
@@ -51,79 +58,90 @@ export function generateWhatsAppMessage(
 
     if (item.description) {
       const parts = item.description.split(" | ");
+
       parts.forEach((part) => {
-        const p = part.trim();
-        if (p.startsWith("Dip:")) {
-          const free = p.replace(/^Dip:\s*/i, "");
-          lines.push(`  Free Dip: ${free}`);
-        } else if (p.startsWith("Extra Dips:")) {
-          const list = p.replace(/^Extra Dips:\s*/i, "").split(",");
-          lines.push(`  Extra Dips:`);
-          list.forEach((name) => {
-            const prod = findByName(name);
-            const price = prod ? `₦${prod.price.toLocaleString()}` : "";
-            lines.push(`    • ${name.trim()} ${price}`);
-          });
-        } else if (p.startsWith("Drinks:")) {
-          const list = p.replace(/^Drinks:\s*/i, "").split(",");
-          lines.push(`  Drinks:`);
-          list.forEach((entry) => {
-            const m = entry.trim().match(/(.+?) x(\d+)$/);
-            if (m) {
-              const name = m[1].trim();
-              const qty = parseInt(m[2], 10) || 1;
-              const prod = findByName(name);
-              const price = prod ? prod.price * qty : 0;
-              lines.push(`    • ${name} ×${qty} – ₦${price.toLocaleString()}`);
-            } else {
-              const name = entry.trim();
-              const prod = findByName(name);
-              const price = prod ? prod.price : 0;
-              lines.push(`    • ${name} – ₦${price.toLocaleString()}`);
-            }
-          });
-        } else {
-          lines.push(`  ${p}`);
+        const section = part.trim();
+
+        if (section.startsWith("Dip:")) {
+          lines.push(`  Free Dip: ${section.replace(/^Dip:\s*/i, "")}`);
+          return;
         }
+
+        if (section.startsWith("Extra Dips:")) {
+          const list = section.replace(/^Extra Dips:\s*/i, "").split(",");
+          lines.push("  Extra Dips:");
+
+          list.forEach((name) => {
+            const product = findByName(name);
+            const price = product ? ` \u20A6${product.price.toLocaleString()}` : "";
+            lines.push(`    - ${name.trim()}${price}`);
+          });
+          return;
+        }
+
+        if (section.startsWith("Drinks:")) {
+          const list = section.replace(/^Drinks:\s*/i, "").split(",");
+          lines.push("  Drinks:");
+
+          list.forEach((entry) => {
+            const match = entry.trim().match(/(.+?) x(\d+)$/);
+
+            if (match) {
+              const name = match[1].trim();
+              const quantity = parseInt(match[2], 10) || 1;
+              const product = findByName(name);
+              const price = product ? product.price * quantity : 0;
+              lines.push(
+                `    - ${name} x${quantity} - \u20A6${price.toLocaleString()}`,
+              );
+              return;
+            }
+
+            const name = entry.trim();
+            const product = findByName(name);
+            const price = product ? product.price : 0;
+            lines.push(`    - ${name} - \u20A6${price.toLocaleString()}`);
+          });
+          return;
+        }
+
+        lines.push(`  ${section}`);
       });
     }
 
-    lines.push(
-      `  Item total: ₦${(item.price * item.quantity).toLocaleString()}`,
-    );
+    lines.push(`  Item total: \u20A6${(item.price * item.quantity).toLocaleString()}`);
     lines.push("");
   });
 
-  lines.push(`*Total: ₦${total.toLocaleString()}*`);
+  lines.push(`*Total: \u20A6${total.toLocaleString()}*`);
   lines.push("");
 
   if (form.address) {
-    lines.push(`📍 Delivery Address:`);
+    lines.push("Delivery Address:");
     lines.push(form.address);
     lines.push("");
   }
 
   if (form.phone) {
-    lines.push(`📱 Phone Number:`);
+    lines.push("Phone Number:");
     lines.push(form.phone);
     lines.push("");
   }
 
   if (form.notes) {
-    lines.push(`📝 Notes:`);
+    lines.push("Notes:");
     lines.push(form.notes);
     lines.push("");
   }
 
-  lines.push(`*Payment:*`);
+  lines.push("*Payment:*");
   lines.push(
     `Please pay the exact amount to ${PAYMENT_ACCOUNT.bankName} ${PAYMENT_ACCOUNT.accountNumber} (${PAYMENT_ACCOUNT.accountName}).`,
   );
   lines.push("");
   lines.push(`Complete payment here: ${payLink}`);
 
-  const message = lines.join("\n");
-  return encodeURIComponent(message);
+  return encodeURIComponent(lines.join("\n"));
 }
 
 export function generateBuyNowMessage(product: Product): string {
@@ -131,12 +149,16 @@ export function generateBuyNowMessage(product: Product): string {
   const payLink = `${SITE_URL}/pay?amount=${encodeURIComponent(
     product.price.toString(),
   )}&ref=${encodeURIComponent(ref)}`;
-  let message = `Hello ${BRAND_NAME}!:\n\n *Order:*\n- ${product.name} x1 \u2013 \u20A6${product.price.toLocaleString()}\n\n*Total: \u20A6${product.price.toLocaleString()}*\n\n`;
+  let message =
+    `Hello ${BRAND_NAME}!:\n\n` +
+    ` *Order:*\n- ${product.name} x1 - \u20A6${product.price.toLocaleString()}\n\n` +
+    `*Total: \u20A6${product.price.toLocaleString()}*\n\n`;
+
   message += `Payment: ${PAYMENT_ACCOUNT.bankName} ${PAYMENT_ACCOUNT.accountNumber} (${PAYMENT_ACCOUNT.accountName})\n`;
   message += `Complete payment here: ${payLink}`;
   return encodeURIComponent(message);
 }
 
 export function openWhatsApp(message: string) {
-  window.open(`${WHATSAPP_BASE_URL}?text=${message}`, "_blank");
+  return window.open(`${WHATSAPP_BASE_URL}?text=${message}`, "_blank");
 }

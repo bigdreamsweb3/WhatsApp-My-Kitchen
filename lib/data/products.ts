@@ -1,3 +1,8 @@
+export interface ProductCustomization {
+  selectedFlavors: string[];
+  selectedItems: Record<string, string[]>;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -5,12 +10,12 @@ export interface Product {
   price: number;
   imageUrl: string;
   tags: string[];
-
   rating?: "Highly rated" | string | number;
   calories?: string;
-
   wingsCount?: number;
   maxFlavors?: number;
+  baseProductId?: string;
+  customization?: ProductCustomization;
 }
 
 export interface Category {
@@ -32,7 +37,7 @@ export const productCategories: Category[] = [
   {
     id: "wings",
     name: "WINGS",
-    emoji: "🍗",
+    emoji: "\uD83C\uDF57",
     description: "Crispy fried wings tossed in our signature flavours.",
     imageUrl: "/menu/Category-Wings-3.jpg",
     products: [
@@ -81,7 +86,7 @@ export const productCategories: Category[] = [
   {
     id: "boneless",
     name: "BONELESS BITES",
-    emoji: "🦴",
+    emoji: "\uD83E\uDDB4",
     description:
       "Crispy boneless chicken bites tossed in our signature house flavours.",
     imageUrl: "/menu/Category-Boneless-3.jpg",
@@ -119,16 +124,15 @@ export const productCategories: Category[] = [
       },
     ],
   },
-
   {
-    id: "drinks",
-    name: "Drinks",
-    emoji: "🥤",
+    id: "refreshments",
+    name: "Refreshments",
+    emoji: "\uD83E\uDD64",
     description: "Cold refreshing beverages",
     imageUrl: "/menu/Category-Drinks-3.jpg",
     products: [
       {
-        id: "drink-water",
+        id: "refreshment-water",
         name: "Water",
         description: "Chilled bottled water",
         price: 495,
@@ -136,7 +140,7 @@ export const productCategories: Category[] = [
         imageUrl: "/menu/drinks/water.jpg",
       },
       {
-        id: "drink-coke",
+        id: "refreshment-coke",
         name: "Coke",
         description: "Classic Coca-Cola",
         price: 595,
@@ -144,7 +148,7 @@ export const productCategories: Category[] = [
         imageUrl: "/menu/drinks/regular-coke.jpg",
       },
       {
-        id: "drink-fanta",
+        id: "refreshment-fanta",
         name: "Fanta",
         description: "Orange soda refreshment",
         price: 595,
@@ -152,7 +156,7 @@ export const productCategories: Category[] = [
         imageUrl: "/menu/drinks/fanta.jpg",
       },
       {
-        id: "drink-sprite",
+        id: "refreshment-sprite",
         name: "Sprite",
         description: "Lemon-lime refreshment",
         price: 595,
@@ -160,7 +164,7 @@ export const productCategories: Category[] = [
         imageUrl: "/menu/drinks/sprite.jpg",
       },
       {
-        id: "drink-zero-coke",
+        id: "refreshment-zero-coke",
         name: "Zero Coke",
         description: "Sugar-free Coca-Cola",
         price: 895,
@@ -168,7 +172,7 @@ export const productCategories: Category[] = [
         imageUrl: "/menu/drinks/zero-coke.jpg",
       },
       {
-        id: "drink-5alive-small",
+        id: "refreshment-5alive-small",
         name: "5 Alive Pulpy Orange 30cl",
         description: "Pulpy orange juice",
         price: 1295,
@@ -176,7 +180,7 @@ export const productCategories: Category[] = [
         imageUrl: "/menu/drinks/5alive-small.jpg",
       },
       {
-        id: "drink-5alive-large",
+        id: "refreshment-5alive-large",
         name: "5 Alive Pulpy Orange 85cl",
         description: "Large pulpy orange juice",
         price: 2295,
@@ -185,11 +189,10 @@ export const productCategories: Category[] = [
       },
     ],
   },
-
   {
     id: "addons",
     name: "ADD-ONS",
-    emoji: "🍟",
+    emoji: "\uD83C\uDF5F",
     description: "Complete your meal with tasty sides",
     imageUrl: "/menu/Category-Wings-3.jpg",
     products: [
@@ -199,23 +202,31 @@ export const productCategories: Category[] = [
         description: "Crispy golden fries",
         price: 1499,
         tags: ["Side"],
-        imageUrl: "/menu/addons/fries-regular.jpg",
+        imageUrl: "/menu/addons/fries-regular.jpeg",
       },
-      {
-        id: "addon-fries-large",
-        name: "Large Fries",
-        description: "Extra helping of fries",
-        price: 2499,
-        tags: ["Side"],
-        imageUrl: "/menu/addons/fries-large.jpg",
-      },
+      // {
+      //   id: "addon-fries-regular",
+      //   name: "Regular Fries",
+      //   description: "Crispy golden fries",
+      //   price: 1499,
+      //   tags: ["Side"],
+      //   imageUrl: "/menu/addons/fries-regular.jpg",
+      // },
+      // {
+      //   id: "addon-fries-large",
+      //   name: "Large Fries",
+      //   description: "Extra helping of fries",
+      //   price: 2499,
+      //   tags: ["Side"],
+      //   imageUrl: "/menu/addons/fries-large.jpg",
+      // },
       {
         id: "addon-plantain",
         name: "Fried Plantain",
         description: "Sweet fried plantain slices",
         price: 1499,
         tags: ["Side"],
-        imageUrl: "/menu/addons/plantain.jpg",
+        imageUrl: "/menu/addons/plantain.jpeg",
       },
       {
         id: "addon-sweet-corn",
@@ -223,117 +234,8 @@ export const productCategories: Category[] = [
         description: "Buttery sweet corn",
         price: 1499,
         tags: ["Side"],
-        imageUrl: "/menu/addons/sweet-corn.jpg",
+        imageUrl: "/menu/addons/sweet-corn.jpeg",
       },
     ],
   },
-
-  // {
-  //   id: "dips",
-  //   name: "DIPS",
-  //   emoji: "🍯",
-  //   description: "Add flavor with our signature sauces",
-  //   imageUrl: "/menu/Category-Wings-3.jpg",
-  //   products: [
-  //     {
-  //       id: "sauce-hot",
-  //       name: "Hot Sauce",
-  //       description: "Extra spicy kick",
-  //       price: 500,
-  //       tags: ["Sauce"],
-  //       imageUrl: "/menu/sauces/hot.jpg",
-  //     },
-  //     {
-  //       id: "sauce-honey",
-  //       name: "Honey Mustard",
-  //       description: "Sweet and tangy",
-  //       price: 500,
-  //       tags: ["Sauce"],
-  //       imageUrl: "/menu/sauces/honey.jpg",
-  //     },
-  //     {
-  //       id: "sauce-garlic",
-  //       name: "Garlic Mayo",
-  //       description: "Creamy garlic dip",
-  //       price: 500,
-  //       tags: ["Sauce"],
-  //       imageUrl: "/menu/sauces/garlic.jpg",
-  //     },
-  //     {
-  //       id: "sauce-bbq",
-  //       name: "BBQ Sauce",
-  //       description: "Smoky barbecue flavor",
-  //       price: 500,
-  //       tags: ["Sauce"],
-  //       imageUrl: "/menu/sauces/bbq.jpg",
-  //     },
-  //   ],
-  // },
 ];
-
-// export function getSuggestedAddOns(productId: string): SuggestionGroup[] {
-//   const suggestedAddOnsMap: Record<string, string[]> = {
-//     "box-4u": [
-//       "drink-coke",
-//       "drink-sprite",
-//       "sauce-hot",
-//       "addon-fries-regular",
-//     ],
-//     "box-4u-double": [
-//       "drink-fanta",
-//       "drink-sprite",
-//       "sauce-honey",
-//       "addon-fries-large",
-//     ],
-//     "box-kaybox-special": [
-//       "drink-zero-coke",
-//       "drink-5alive-small",
-//       "sauce-garlic",
-//       "addon-plantain",
-//     ],
-//     "box-party-mode": [
-//       "drink-5alive-large",
-//       "drink-fanta",
-//       "sauce-bbq",
-//       "addon-fries-large",
-//       "addon-sweet-corn",
-//     ],
-//   };
-
-//   const suggestedIds = suggestedAddOnsMap[productId] || [
-//     "sauce-hot",
-//     "addon-fries-regular",
-//     "drink-coke",
-//   ];
-
-//   const suggestionMap = new Map<
-//     string,
-//     { categoryName: string; items: Product[] }
-//   >();
-
-//   for (const category of productCategories) {
-//     for (const product of category.products) {
-//       if (suggestedIds.includes(product.id)) {
-//         if (!suggestionMap.has(category.id)) {
-//           suggestionMap.set(category.id, {
-//             categoryName: category.name,
-//             items: [],
-//           });
-//         }
-//         suggestionMap.get(category.id)!.items.push(product);
-//       }
-//     }
-//   }
-
-//   const suggestionGroups: SuggestionGroup[] = [];
-
-//   for (const [categoryId, { categoryName, items }] of suggestionMap) {
-//     suggestionGroups.push({
-//       categoryId,
-//       category: categoryName,
-//       items,
-//     });
-//   }
-
-//   return suggestionGroups;
-// }

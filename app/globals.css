@@ -202,6 +202,39 @@
   }
 }
 
+@layer utilities {
+  @keyframes arrowWave {
+    0%,
+    100% {
+      opacity: 0.4;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(4px); /* or 3px / 5px – small movement looks nice */
+    }
+  }
+
+  .animate-arrow-wave {
+    animation: arrowWave 1.8s ease-in-out infinite;
+  }
+
+  /* Optional: variant with only fade (no movement) */
+  @keyframes arrowFade {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .animate-arrow-fade {
+    animation: arrowFade 2.2s ease-in-out infinite;
+  }
+}
+
 @layer base {
   :root {
     font-family: var(--font-body);
@@ -320,23 +353,6 @@
     opacity: 0;
     transform: translateY(40px) scale(0.96);
   }
-
-  60% {
-    opacity: 1;
-    transform: translateY(-6px) scale(1.02);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes categoryReveal {
-  0% {
-    opacity: 0;
-    transform: translateY(40px) scale(0.96);
-  }
   60% {
     opacity: 1;
     transform: translateY(-6px) scale(1.02);
@@ -349,4 +365,17 @@
 
 .animate-category-reveal {
   animation: categoryReveal 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes arrowFade {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.animate-arrow-fade {
+  animation: arrowFade 2.4s ease-in-out infinite;
 }
